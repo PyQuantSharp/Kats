@@ -708,9 +708,11 @@ class GMModel:
         x_lt, levels, seasonality = [], [], []
         if params.seasonality > 1:
             seasonality = [
+                # pyrefly: ignore [unsupported-operation]
                 batch.init_seasonality[:, i].view(tmp_batch_size, 1)
                 for i in range(period)
             ]
+            # pyrefly: ignore [unsupported-operation]
             seasonality.append(batch.init_seasonality[:, 0].view(tmp_batch_size, 1))
         else:
             seasonality = [Tensor([1.0])]

@@ -205,8 +205,11 @@ class TimeSeriesDecomposition:
 
         # pyrefly: ignore [bad-return]
         return {
+            # pyrefly: ignore [bad-assignment]
             "trend": post_transform(result.trend),
+            # pyrefly: ignore [bad-assignment]
             "seasonal": post_transform(result.seasonal),
+            # pyrefly: ignore [bad-assignment]
             "rem": post_transform(result.resid),
         }
 

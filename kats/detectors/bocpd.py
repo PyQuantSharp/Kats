@@ -1010,7 +1010,7 @@ class _BayesOnlineChangePoint(Detector):
             ts_names = self._ts_names
 
         axs = []
-        # pyrefly: ignore [bad-argument-type]
+        # pyrefly: ignore [bad-argument-type, not-iterable]
         for ts_ix, ts_name in enumerate(ts_names):
             cp_output = cp_outputs[ts_name]
             change_points = cp_output["change_points"]

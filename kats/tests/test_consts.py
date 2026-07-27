@@ -1614,6 +1614,7 @@ class TimeSeriesDataOpsTest(TimeSeriesBaseTest):
             ts_univ = TimeSeriesData(
                 time=self.ts_date_transform_concat_multi.time,
                 value=self.ts_date_transform_concat_multi.value[col],
+                # pyrefly: ignore [bad-argument-type]
                 time_col_name=self.ts_date_transform_concat_multi.time_col_name,
             )
             self.assertEqual(self.ts_date_transform_concat_multi[col], ts_univ)

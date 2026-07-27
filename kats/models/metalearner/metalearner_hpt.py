@@ -320,7 +320,7 @@ class MetaLearnHPT:
             msg = f"Dimensions of data_y (dim={dim}) and the input variables (dim={n_cat}+{n_num}) do not agree!"
             raise _log_error(msg)
 
-        # pyrefly: ignore [bad-argument-type]
+        # pyrefly: ignore [bad-argument-type, not-iterable]
         for i, var in enumerate(self.categorical_idx):
             if self.dim_output_cat[i] == 1:
                 msg = f"Column {var} only has one class, not able to train a model!"
@@ -725,12 +725,12 @@ class MetaLearnHPT:
         nums = nums.detach().numpy() if nums is not None else []
 
         ans = [{} for _ in range(n)]
-        # pyrefly: ignore [bad-argument-type]
+        # pyrefly: ignore [bad-argument-type, not-iterable]
         for j, c in enumerate(self.categorical_idx):
             vals = cats[j]
             for i in range(n):
                 ans[i][c] = self.cat_code_dict[c][vals[i]]
-        # pyrefly: ignore [bad-argument-type]
+        # pyrefly: ignore [bad-argument-type, not-iterable]
         for j, c in enumerate(self.numerical_idx):
             # pyrefly: ignore [bad-index]
             vals = nums[:, j]

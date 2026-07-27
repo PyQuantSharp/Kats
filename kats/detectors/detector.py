@@ -56,7 +56,7 @@ class DetectorModelRegistry(ABCMeta, Generic[D]):
         if not inspect.isabstract(new_cls):
             # Store the class object with the key as the class name.
             # Note that the class name is case sensitive
-            # pyrefly: ignore [missing-attribute]
+            # pyrefly: ignore [missing-attribute, unsupported-operation]
             cls.REGISTRY[new_cls.__name__] = new_cls
         # pyrefly: ignore [bad-return]
         return new_cls

@@ -549,11 +549,13 @@ class TimeSeriesData:
             return TimeSeriesData(
                 time=self.time,
                 value=self.value[sliced],
+                # pyrefly: ignore [bad-argument-type]
                 time_col_name=self.time_col_name,
             )
         return TimeSeriesData(
             time=self.time[sliced],
             value=self.value[sliced],
+            # pyrefly: ignore [bad-argument-type]
             time_col_name=self.time_col_name,
         )
 
@@ -718,6 +720,7 @@ class TimeSeriesData:
             time=self.time[mask],
             value=self.value[mask],
             categorical_var=self.categorical_var,
+            # pyrefly: ignore [bad-argument-type]
             time_col_name=self.time_col_name,
         )
 
@@ -943,6 +946,7 @@ class TimeSeriesData:
         if self.time_col_name != DEFAULT_TIME_NAME:
             combo_df[self.time_col_name] = combo_df[DEFAULT_TIME_NAME]
             combo_df.drop(DEFAULT_TIME_NAME, axis=1, inplace=True)
+        # pyrefly: ignore [bad-argument-type]
         return TimeSeriesData(df=combo_df, time_col_name=self.time_col_name)
 
     def _sort_by_time(self, sort_by_time: bool, df: pd.DataFrame) -> pd.DataFrame:
@@ -1078,6 +1082,7 @@ class TimeSeriesData:
             )
 
         df = df.reset_index().rename(columns={"index": self.time_col_name})
+        # pyrefly: ignore [bad-argument-type]
         return TimeSeriesData(df, time_col_name=self.time_col_name)
 
     def _interpolate_new(
@@ -1108,6 +1113,7 @@ class TimeSeriesData:
             )
 
         df = df.reset_index().rename(columns={"index": self.time_col_name})
+        # pyrefly: ignore [bad-argument-type]
         return TimeSeriesData(df, time_col_name=self.time_col_name)
 
     def plot(

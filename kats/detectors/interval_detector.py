@@ -542,7 +542,9 @@ class IntervalDetectorModel(DetectorModel, ABC):
         # pyrefly: ignore [bad-return]
         return {
             **{
+                # pyrefly: ignore [bad-assignment]
                 "alpha": self.alpha,
+                # pyrefly: ignore [bad-assignment]
                 "duration": self.duration,
                 # serialize value
                 "test_type": self.test_type.value,

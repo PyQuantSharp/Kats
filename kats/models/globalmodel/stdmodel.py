@@ -164,10 +164,14 @@ class STDGlobalModel:
                 {
                     "trend": TimeSeriesData(
                         decomp_res[[time_col_name, "trend"]],
+                        # pyrefly: ignore [bad-argument-type]
                         time_col_name=time_col_name,
                     ),
                     "seasonal": TimeSeriesData(
-                        decomp_res[[time_col_name, tag]], time_col_name=time_col_name
+                        # pyrefly: ignore [bad-argument-type]
+                        decomp_res[[time_col_name, tag]],
+                        # pyrefly: ignore [bad-argument-type]
+                        time_col_name=time_col_name,
                     ),
                     # "res": TimeSeriesData(decomp_res[[time_col_name, "res"]], time_col_name = time_col_name),
                 },
