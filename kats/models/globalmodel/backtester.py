@@ -59,7 +59,6 @@ class GMBackTester:
         # pyre-fixme[2]: Parameter annotation cannot contain `Any`.
         data: Union[List[TimeSeriesData], Dict[Any, TimeSeriesData]],
         gmparam: GMParam,
-        # pyre-fixme[11]: Annotation `Timestamp` is not defined as a type.
         backtest_timestamp: List[Union[str, pd.Timestamp]],
         splits: int = 3,
         overlap: bool = True,
@@ -74,20 +73,16 @@ class GMBackTester:
             logging.error(msg)
             raise ValueError(msg)
         self.params = gmparam
-        # pyre-fixme[4]: Attribute must be annotated.
         self.max_back_test_timedelta = (
             gmparam.freq * gmparam.validation_step_num * gmparam.fcst_window * 3
         )
-        # pyre-fixme[4]: Attribute must be annotated.
         self.min_train_length = (
             gmparam.input_window
             + gmparam.fcst_window
             + gmparam.min_training_step_num * gmparam.min_training_step_length
         )
-        # pyre-fixme[4]: Attribute must be annotated.
         self.min_valid_length = gmparam.fcst_window
 
-        # pyre-fixme[4]: Attribute must be annotated.
         self.min_test_length = (
             gmparam.min_warming_up_step_num * gmparam.min_training_step_length
             + gmparam.input_window
@@ -97,7 +92,6 @@ class GMBackTester:
             msg = "backtest_timestamp should be a non-empty list of timestamp strings."
             logging.error(msg)
             raise ValueError(msg)
-        # pyre-fixme[4]: Attribute must be annotated.
         self.backtest_timestamp = backtest_timestamp
 
         if not isinstance(splits, int) or splits < 1:
@@ -124,16 +118,13 @@ class GMBackTester:
             msg = f"earliest_timestamp should either be a str or a pd.Timestamp but receives {type(earliest_timestamp)}."
             logging.error(msg)
             raise ValueError(msg)
-        # pyre-fixme[4]: Attribute must be annotated.
         self.earliest_timestamp = earliest_timestamp
         pdata = self._preprocess(data)
-        # pyre-fixme[4]: Attribute must be annotated.
         self.data = pdata
 
         n = len(data)
 
         if isinstance(test_size, int) and test_size > 0 and test_size < n:
-            # pyre-fixme[4]: Attribute must be annotated.
             self.test_size = test_size
         elif isinstance(test_size, float) and test_size > 0 and test_size < 1:
             self.test_size = int(len(data) * test_size)
@@ -144,7 +135,6 @@ class GMBackTester:
 
         total_cores = cpu_count()
         if max_core is None:
-            # pyre-fixme[4]: Attribute must be annotated.
             self.max_core = max((total_cores - 1) // 2, 1)
         elif isinstance(max_core, int) and max_core > 0 and max_core < total_cores:
             self.max_core = max_core
@@ -153,21 +143,15 @@ class GMBackTester:
             logging.error(msg)
             raise ValueError(msg)
 
-        # pyre-fixme[4]: Attribute must be annotated.
         self.gm_collects = {
             bt: [GMModel(gmparam) for _ in range(int(replicate * splits))]
             for bt in backtest_timestamp
         }
-        # pyre-fixme[4]: Attribute must be annotated.
         self.gm_info_collects = collections.defaultdict(list)
-        # pyre-fixme[4]: Attribute must be annotated.
         self.evaluation_collects = []
-        # pyre-fixme[4]: Attribute must be annotated.
         self.bt_info = {}
-        # pyre-fixme[4]: Attribute must be annotated.
         self.test_ids = []
 
-    # pyre-fixme[3]: Return annotation cannot contain `Any`.
     def _preprocess(
         self,
         # pyre-fixme[2]: Parameter annotation cannot contain `Any`.
@@ -209,7 +193,6 @@ class GMBackTester:
         # pyrefly: ignore [bad-return]
         return ans
 
-    # pyre-fixme[3]: Return annotation cannot contain `Any`.
     def _filter(
         self,
         # pyre-fixme[2]: Parameter annotation cannot contain `Any`.
@@ -308,7 +291,6 @@ class GMBackTester:
             Random seed.
         """
         if random_seed is not None:
-            # pyrefly: ignore [bad-argument-type]
             np.random.seed(random_seed)
             torch.manual_seed(random_seed)
             # to ensure performance

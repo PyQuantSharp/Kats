@@ -14,15 +14,12 @@ import numpy.typing as npt
 import pandas as pd
 from kats.consts import TimeSeriesChangePoint, TimeSeriesData
 from kats.detectors.detector import Detector
-
-# pyrefly: ignore [missing-module-attribute]
 from scipy.stats import norm, zscore  # @manual
 
 
 class RobustStatChangePoint(TimeSeriesChangePoint):
     def __init__(
         self,
-        # pyre-fixme[11]: Annotation `Timestamp` is not defined as a type.
         start_time: pd.Timestamp,
         end_time: pd.Timestamp,
         confidence: float,

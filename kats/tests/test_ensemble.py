@@ -32,7 +32,6 @@ from kats.models.ensemble.weighted_avg_ensemble import WeightedAvgEnsemble
 from kats.models.model import Model
 from parameterized.parameterized import parameterized
 
-# pyrefly: ignore [bad-argument-type]
 np.random.seed(123321)
 DATA_dummy = pd.DataFrame(
     {
@@ -484,7 +483,6 @@ class testEnsembleModels(TestCase):
         TSData_multi = TEST_DATA["multivariate"]["ts"]
         params = TEST_DATA["multivariate"]["params"]
 
-        # pyrefly: ignore [no-matching-overload]
         self.assertRaises(
             ValueError,
             # pyre-fixme[6]: For 2nd param expected `(...) -> Any` but got

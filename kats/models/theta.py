@@ -26,8 +26,6 @@ from kats.consts import Params, TimeSeriesData
 from kats.models.model import Model
 from kats.utils.decomposition import TimeSeriesDecomposition
 from kats.utils.parameter_tuning_utils import get_default_theta_parameter_search_space
-
-# pyrefly: ignore [missing-module-attribute]
 from scipy.stats import norm  # @manual
 from statsmodels.tsa.holtwinters import HoltWintersResults, SimpleExpSmoothing
 from statsmodels.tsa.stattools import acf
@@ -119,7 +117,6 @@ class ThetaModel(Model[ThetaParams]):
             abs_seasonal_values = decomp["seasonal"].value.abs()
             zeroes_in_seasonal = abs_seasonal_values < 10**-10
 
-            # pyre-fixme[16]: `bool` has no attribute `any`.
             if zeroes_in_seasonal.any():
                 logging.info(
                     "Seasonal indexes equal to zero. Using non-seasonal Theta method"
@@ -233,17 +230,13 @@ class ThetaModel(Model[ThetaParams]):
             fcst_df = pd.DataFrame(
                 {
                     "time": np.concatenate(
-                        # pyre-fixme[6]: For 1st argument expected `Union[_SupportsAr...
                         (pd.to_datetime(self.data.time), self.dates)
                     ),
-                    # pyre-fixme[6]: For 1st argument expected `Union[_SupportsArray[...
                     "fcst": np.concatenate((fitted_values, self.y_fcst)),
                     "fcst_lower": np.concatenate(
-                        # pyre-fixme[6]: For 1st argument expected `Union[_SupportsAr...
                         (fitted_values - zt * sigma2, self.y_fcst_lower)
                     ),
                     "fcst_upper": np.concatenate(
-                        # pyre-fixme[6]: For 1st argument expected `Union[_SupportsAr...
                         (fitted_values + zt * sigma2, self.y_fcst_upper)
                     ),
                 },

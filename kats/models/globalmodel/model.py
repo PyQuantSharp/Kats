@@ -373,7 +373,6 @@ class GMModel:
                 msg = f"{tag} tensor contains inf (tensor = {input_t})"
                 logging.error(msg)
 
-    # pyre-fixme[3]: Return annotation cannot contain `Any`.
     def train(
         self,
         # pyre-fixme[2]: Parameter annotation cannot contain `Any`.
@@ -516,7 +515,6 @@ class GMModel:
         self._reset_nn_states()
         return training_info
 
-    # pyre-fixme[3]: Return annotation cannot contain `Any`.
     def _format_fcst(
         self,
         # pyre-fixme[2]: Parameter annotation cannot contain `Any`.
@@ -568,7 +566,6 @@ class GMModel:
             ans[idx] = df
         return ans
 
-    # pyre-fixme[3]: Return annotation cannot contain `Any`.
     def predict(
         self,
         # pyre-fixme[2]: Parameter annotation cannot contain `Any`.
@@ -672,7 +669,6 @@ class GMModel:
             joblib.dump(info, f)
         logging.info(f"Successfully save model to file {file_name}.")
 
-    # pyre-fixme[3]: Return annotation cannot contain `Any`.
     def _single_pass_rnn(
         self,
         rnn: nn.Module,
@@ -838,7 +834,6 @@ class GMModel:
 
         return train_loss, train_res, valid_res, fcst_store
 
-    # pyre-fixme[3]: Return annotation cannot contain `Any`.
     def _single_pass(
         self,
         params: GMParam,
@@ -1056,7 +1051,6 @@ class GMModel:
             x_lt,
         )
 
-    # pyre-fixme[3]: Return annotation cannot contain `Any`.
     def _single_pass_s2s(
         self,
         encoder: nn.Module,

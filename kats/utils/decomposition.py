@@ -18,12 +18,9 @@ from kats.consts import (
     ParameterError,
     TimeSeriesData,
 )
-
-# pyre-fixme[21]: Could not find name `STL` in `statsmodels.tsa.seasonal`.
 from statsmodels.tsa.seasonal import seasonal_decompose, STL
 
 # from numpy.typing import ArrayLike
-# pyre-fixme[24]: Generic type `np.ndarray` expects 2 type parameters.
 ArrayLike = Union[np.ndarray, Sequence[float]]
 Figsize = Tuple[int, int]
 
@@ -47,7 +44,6 @@ class TimeSeriesDecomposition:
         method: `STL decompostion` or `seasonal_decompose`
     """
 
-    # pyre-fixme[11]: Annotation `Timedelta` is not defined as a type.
     freq: Optional[Union[str, pd.Timedelta]] = None
     results: Optional[Dict[str, TimeSeriesData]] = None
     decomposition: str
@@ -187,7 +183,6 @@ class TimeSeriesDecomposition:
             data = np.log(original)
             post_transform = np.exp
 
-        # pyre-fixme[16]: Module `seasonal` has no attribute `STL`.
         result = STL(
             data.squeeze(),
             period=period,
@@ -203,7 +198,6 @@ class TimeSeriesDecomposition:
             low_pass_jump=self.low_pass_jump,
         ).fit()
 
-        # pyrefly: ignore [bad-return]
         return {
             # pyrefly: ignore [bad-assignment]
             "trend": post_transform(result.trend),
@@ -439,7 +433,6 @@ class SeasonalityHandler:
                 trend_jump=max(int((self.period + 1) * self.trend_jump_factor), 1),
             )
             assert self.decomp is not None
-            # pyre-fixme[16]: `Optional` has no attribute `__setitem__`.
             self.decomp[str(i)] = decomposer.decomposer()
 
     def remove_seasonality(self) -> TimeSeriesData:

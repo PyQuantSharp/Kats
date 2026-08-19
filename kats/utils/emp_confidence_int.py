@@ -147,7 +147,6 @@ class EmpConfidenceInt:
 
         logging.info("Run backtesting.")
         backtester.run_backtest()
-        # pyre-fixme[8]: Attribute has type `Optional[DataFrame]`; used as
         #  `Union[float, Series]`.
         self.SE = (
             # pyrefly: ignore
@@ -203,7 +202,6 @@ class EmpConfidenceInt:
         horizons = np.arange(1, steps + 1)
         coefs = self.coefs
         assert coefs is not None  # set by get_lr above
-        # pyrefly: ignore [missing-attribute]
         me = stats.norm.ppf(self.confidence_level) * (horizons * coefs[0] + coefs[1])
 
         self.df = df = pd.DataFrame(
@@ -326,9 +324,7 @@ class EmpConfidenceInt:
         if predicted.shape[1] == 4:
             ax.fill_between(
                 fcst_dates,
-                # pyre-fixme[16]: `ndarray` has no attribute `fcst_lower`.
                 predicted.fcst_lower,
-                # pyre-fixme[16]: `ndarray` has no attribute `fcst_upper`.
                 predicted.fcst_upper,
                 color=modelcolor,
                 alpha=modelalpha,

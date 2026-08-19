@@ -458,7 +458,6 @@ class MLARModel:
     def _valid_and_fillna(
         self,
         data: Union[Dict[str, TimeSeriesData], List[TimeSeriesData]],
-        # pyre-fixme[11]: Annotation `Timestamp` is not defined as a type.
     ) -> Tuple[Dict[str, pd.DataFrame], Set[pd.Timestamp]]:
         """This is a function to validate dataset before training and prediction
             For both input as :class:`kats.consts.TimeSeriesData` or :class:`kats.consts.TimeSeriesData`
@@ -491,7 +490,6 @@ class MLARModel:
 
         data_dict = {}
         timestamps = set()
-        # pyre-fixme[6]: For 1st argument expected `None` but got `Optional[str]`.
         offset = pd.tseries.frequencies.to_offset(self.params.freq)
 
         for k in keys:
@@ -502,7 +500,6 @@ class MLARModel:
             timestamps.update(curr_series_data.index)
             # add forecast timestamps
             timestamps.update(
-                # pyre-fixme
                 [curr_series_data.index[-1] + offset * i for i in self.params.horizon]
             )
         return data_dict, timestamps
@@ -868,7 +865,6 @@ class MLARModel:
         emb_fut_cov: pd.DataFrame,
         gen_meta_data: bool = True,
     ) -> Tuple[npt.NDArray, pd.DataFrame, List[str]]:
-        # pyre-fixme[6]: For 1st argument expected `None` but got `Optional[str]`.
         offset = pd.tseries.frequencies.to_offset(self.params.freq)
         num_cols = self.num_hist_reg + cal_feat.shape[1] + emb_fut_cov.shape[1] + 1
         tv_idx = 0
@@ -1151,7 +1147,6 @@ class MLARModel:
         new_data_is_forecast: bool = True,
     ) -> None:
         new_data_dict = {}
-        # pyre-fixme[6]: For 1st argument expected `None` but got `Optional[str]`.
         offset = pd.tseries.frequencies.to_offset(self.params.freq)
 
         for curr_series in self.all_series.keys():
@@ -1359,7 +1354,6 @@ class MLARModel:
                         curr_series
                     ].combine_first(fcr[curr_series])
                     forecast_result[curr_series].reset_index(inplace=True, drop=False)
-                    # pyre-fixme[6]: For 2nd argument expected `DataFrame` but got
                     #  `Optional[DataFrame]`.
                     forecast_result[curr_series] = forecast_result[
                         curr_series

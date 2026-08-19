@@ -16,13 +16,10 @@ import numpy as np
 import numpy.typing as npt
 import pandas as pd
 from kats.consts import TimeSeriesData
-
-# pyrefly: ignore [missing-module-attribute]
 from scipy.stats import norm, t, ttest_ind  # @manual
 from statsmodels.stats import multitest
 
 # from np.typing import ArrayLike
-# pyre-fixme[24]: Generic type `np.ndarray` expects 2 type parameters.
 ArrayLike = np.ndarray
 
 
@@ -212,13 +209,9 @@ class PercentageChange:
         self.current = current
         self.previous = previous
 
-        # pyre-fixme[4]: Attribute annotation cannot contain `Any`.
         self.upper = None
-        # pyre-fixme[4]: Attribute annotation cannot contain `Any`.
         self.lower = None
-        # pyre-fixme[4]: Attribute annotation cannot contain `Any`.
         self._t_score = None
-        # pyre-fixme[4]: Attribute annotation cannot contain `Any`.
         self._p_value = None
         self.alpha = 0.05
         self.method = method
@@ -233,12 +226,10 @@ class PercentageChange:
 
     @property
     def ratio_estimate(self) -> Union[float, npt.NDArray]:
-        # pyre-ignore[6]: Expected float for 1st positional only parameter to call float.__truediv__ but got Union[float, np.ndarray].
         return self.current.mean_val / self.previous.mean_val
 
     @property
     def perc_change(self) -> float:
-        # pyre-fixme[7]: Expected `float` but got `Union[ndarray[Any, dtype[Any]],
         #  float]`.
         return (self.ratio_estimate - 1.0) * 100.0
 
@@ -246,18 +237,14 @@ class PercentageChange:
     def perc_change_upper(self) -> float:
         if self.upper is None:
             self._delta_method()
-        # pyre-fixme[7]: Expected `float` but got `Union[ndarray[Any, dtype[Any]],
         #  float]`.
-        # pyre-fixme[24]: Generic type `np.ndarray` expects 2 type parameters.
         return (cast(Union[float, np.ndarray], self.upper) - 1) * 100.0
 
     @property
     def perc_change_lower(self) -> float:
         if self.lower is None:
             self._delta_method()
-        # pyre-fixme[7]: Expected `float` but got `Union[ndarray[Any, dtype[Any]],
         #  float]`.
-        # pyre-fixme[24]: Generic type `np.ndarray` expects 2 type parameters.
         return (cast(Union[float, np.ndarray], self.lower) - 1) * 100.0
 
     @property
@@ -278,10 +265,8 @@ class PercentageChange:
                 [
                     (
                         False
-                        # pyre-fixme[24]: Generic type `np.ndarray` expects 2 type
                         #  parameters.
                         if cast(np.ndarray, self.upper)[i] > 1.0
-                        # pyre-fixme[24]: Generic type `np.ndarray` expects 2 type
                         #  parameters.
                         and cast(np.ndarray, self.lower)[i] < 1
                         else True
@@ -291,9 +276,7 @@ class PercentageChange:
             )
         # not stat sig e.g. [0.88, 1.55]
         return not (
-            # pyre-fixme[24]: Generic type `np.ndarray` expects 2 type parameters.
             cast(Union[float, np.ndarray], self.upper) > 1.0
-            # pyre-fixme[24]: Generic type `np.ndarray` expects 2 type parameters.
             and cast(Union[float, np.ndarray], self.lower) < 1.0
         )
 
@@ -309,10 +292,8 @@ class PercentageChange:
                 t_score = 0.0
         else:
             t_score = np.where(
-                # pyre-fixme[6]: For 3rd argument expected `Union[_SupportsArray[dtyp...
                 np.abs(self.perc_change) < self.min_perc_change,
                 0,
-                # pyre-fixme[6]: For 3rd argument expected `Union[_SupportsArray[dtyp...
                 t_score,
             )
 
@@ -330,7 +311,6 @@ class PercentageChange:
 
     @property
     def mean_difference(self) -> Union[float, npt.NDArray]:
-        # pyre-ignore[6]: Expected `float` for 1st param but got `Union[float,
         #  np.ndarray]`.
         _mean_diff = self.current.mean_val - self.previous.mean_val
         return _mean_diff
@@ -344,7 +324,6 @@ class PercentageChange:
         # this is because, for example, t.ppf(0.025, 30) ~ -1.96
         _ci_upper = self.previous.mean_val - t.ppf(self.alpha / 2, df) * sp_mean
 
-        # pyre-fixme[7]: Expected `float` but got `Union[ndarray[Any, dtype[Any]],
         #  float]`.
         return _ci_upper
 
@@ -356,7 +335,6 @@ class PercentageChange:
         # above
         _ci_lower = self.previous.mean_val + t.ppf(self.alpha / 2, df) * sp_mean
 
-        # pyre-fixme[7]: Expected `float` but got `Union[ndarray[Any, dtype[Any]],
         #  float]`.
         return _ci_lower
 
@@ -407,7 +385,6 @@ class PercentageChange:
         sp_mean = self._pooled_stddev()
         df = self._get_df()
 
-        # pyre-ignore[6]: Expected float for 1st positional only parameter to call float.__sub__ but got Union[float, np.ndarray].
         t_score = (self.current.mean_val - self.previous.mean_val) / sp_mean
         p_value = t.sf(np.abs(t_score), df) * 2  # sf = 1 - cdf
 
@@ -484,7 +461,6 @@ class PercentageChange:
         # pyre-fixme[24]: Generic type `np.ndarray` expects 2 type parameters.
         _p_value: npt.NDArray = cast(np.ndarray, self._p_value)
         for i in range(self.current.num_series):
-            # pyre-fixme[16]: Item `float` of `ndarray[Any, dtype[Any]] | float` has
             #  no attribute `__getitem__`.
             if t_value_start[i] < 0:
                 _t_score[i] = t.ppf(_p_value[i] / 2, self._get_df())
@@ -531,17 +507,12 @@ class PercentageChange:
         cov_xy = self._calc_cov()
 
         sigma_sq_ratio = (
-            # pyre-fixme[58]: `*` is not supported for operand types `int` and
             #  `Union[ndarray[Any, dtype[Any]], float]`.
             test_var / (n_test * (control_mean**2))
-            # pyre-fixme[58]: `*` is not supported for operand types `int` and
             #  `Union[ndarray[Any, dtype[Any]], float]`.
-            # pyre-fixme[58]: `/` is not supported for operand types `int` and
             #  `Union[ndarray[Any, dtype[Any]], float]`.
             - 2 * (test_mean * cov_xy) / (control_mean**3)
-            # pyre-fixme[6]: For 1st argument expected `float` but got
             #  `Union[ndarray[Any, dtype[Any]], float]`.
-            # pyre-fixme[58]: `*` is not supported for operand types `int` and
             #  `Union[ndarray[Any, dtype[Any]], float]`.
             + (control_var * (test_mean**2)) / (n_control * (control_mean**4))
         )

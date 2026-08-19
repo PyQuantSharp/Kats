@@ -815,7 +815,6 @@ class StatSigDetectorModel(DetectorModel):
             ),
         )
 
-    # pyre-fixme[11]: Annotation `Timestamp` is not defined as a type.
     def _update_response(self, date: pd.Timestamp) -> None:
         """
         Updates the current response with data from date.
@@ -912,7 +911,6 @@ class StatSigDetectorModel(DetectorModel):
         data_history = self.data_history
         assert data_history is not None
         self.data_history = TimeSeriesData(
-            # pyre-fixme[6]: For 1st argument expected `Union[None, DatetimeIndex,
             #  Series]` but got `Union[DataFrame, Series]`.
             time=pd.concat([data_history.time, data.time], copy=False),
             value=pd.concat([data_history.value, data.value], copy=False),

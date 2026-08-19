@@ -34,7 +34,6 @@ class SingleSpikeTest(TestCase):
 class UnivariateChangePointIntervalTest(TestCase):
     # test for univariate time series
     def setUp(self) -> None:
-        # pyrefly: ignore [bad-argument-type]
         np.random.seed(100)
 
         date_start_str = "2020-03-01"
@@ -98,9 +97,7 @@ class UnivariateChangePointIntervalTest(TestCase):
     def test_start_end_date(self) -> None:
         # tests whether data is clipped property to start and end dates
         np.testing.assert_array_equal(
-            # pyre-fixme[6]: For 2nd argument expected `Union[_SupportsArray[dtype[An...
             self.previous_values[0:9],
-            # pyre-fixme[6]: For 2nd argument expected `Union[_SupportsArray[dtype[An...
             self.previous_int_test.data,
         )
 
@@ -144,7 +141,6 @@ class UnivariateChangePointIntervalTest(TestCase):
 class MultivariateChangePointIntervalTest(TestCase):
     # test for multivariate time series
     def setUp(self) -> None:
-        # pyrefly: ignore [bad-argument-type]
         np.random.seed(100)
 
         date_start_str = "2020-03-01"
@@ -338,7 +334,6 @@ class MultivariateChangePointIntervalTest(TestCase):
 class UnivariatePercentageChangeTest(TestCase):
     # test for univariate time series
     def setUp(self) -> None:
-        # pyrefly: ignore [bad-argument-type]
         np.random.seed(100)
 
         date_start_str = "2020-03-01"
@@ -476,7 +471,6 @@ class UnivariatePercentageChangeTest(TestCase):
 class MultivariatePercentageChangeTest(TestCase):
     # test for multivariate time series
     def setUp(self) -> None:
-        # pyrefly: ignore [bad-argument-type]
         np.random.seed(100)
 
         date_start_str = "2020-03-01"
@@ -679,7 +673,6 @@ class MultivariatePercentageChangeTest(TestCase):
 class TestUnivariateAnomalyResponse(TestCase):
     # test anomaly response for univariate time series
     def setUp(self) -> None:
-        # pyrefly: ignore [bad-argument-type]
         np.random.seed(100)
 
         date_start_str = "2020-03-01"
@@ -932,7 +925,6 @@ class TestMultivariateAnomalyResponse(TestCase):
     # test anomaly response for multivariate time series
 
     def setUp(self) -> None:
-        # pyrefly: ignore [bad-argument-type]
         np.random.seed(100)
 
         date_start_str = "2020-03-01"

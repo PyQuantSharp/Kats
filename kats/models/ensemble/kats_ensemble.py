@@ -46,7 +46,6 @@ from kats.utils.backtesters import BackTesterSimple
 from kats.utils.decomposition import TimeSeriesDecomposition
 
 # from numpy.typing import ArrayLike
-# pyre-fixme[24]: Generic type `np.ndarray` expects 2 type parameters.
 ArrayLike = Union[Sequence[float], np.ndarray]
 
 # models that can fit de_seasonal component
@@ -728,10 +727,8 @@ class KatsEnsemble(Model):
         """
 
         if use_zero:
-            # pyre-fixme[6]: For 2nd argument expected `DataFrame` but got
             #  `Optional[DataFrame]`.
             fcsts["fcst_lower"] = fcsts["fcst_lower"].fillna(0)
-            # pyre-fixme[6]: For 2nd argument expected `DataFrame` but got
             #  `Optional[DataFrame]`.
             fcsts["fcst_upper"] = fcsts["fcst_upper"].fillna(0)
         else:

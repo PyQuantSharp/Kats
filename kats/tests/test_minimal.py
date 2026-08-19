@@ -16,7 +16,6 @@ class TestMinimal(unittest.TestCase):
     def test_install(self) -> None:
         self.assertIsNotNone(kats.models)
 
-    # pyre-fixme[56]: Pyre was not able to infer the type of argument `"torch" in
     #  sys.modules` to decorator factory `pytest.mark.skipif`.
     @pytest.mark.skipif("torch" in sys.modules, reason="not minimal")
     def test_minimal_install(self) -> None:

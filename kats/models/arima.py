@@ -77,7 +77,6 @@ class ARIMAParams(Params):
         self.p = p
         self.d = d
         self.q = q
-        # pyre-fixme[8]: Incompatible attribute type, Attribute `exog` declared in class `ARIMAParams` has type `Optional[ndarray[typing.Any, dtype[typing.Any]]]` but is used as type `Union[None, _SupportsArray[dtype[typing.Any]], _NestedSequence[_SupportsArray[dtype[typing.Any]]],...
         self.exog = exog
         self.dates = dates
         self.freq = freq

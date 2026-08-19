@@ -85,7 +85,6 @@ def get_filters(isna_idx, seasonality) -> npt.NDArray:
 def fill_missing_value_na(
     ts: TimeSeriesData,
     seasonality: int,
-    # pyre-fixme[11]: Annotation `Timedelta` is not defined as a type.
     freq: Optional[Union[str, pd.Timedelta]] = None,
 ) -> TimeSeriesData:
     """Padding holes in time series with NaNs, such that the timestamp difference between any two consecute timestamps is either zero or a multipler of seasonality.
@@ -134,7 +133,6 @@ def fill_missing_value_na(
         return TimeSeriesData(all_ds.loc[filters])
 
 
-# pyre-fixme[3]: Return annotation cannot contain `Any`.
 def split(
     splits: int,
     overlap: bool,
@@ -230,7 +228,6 @@ class LSTM2Cell(torch.nn.Module):
         super(LSTM2Cell, self).__init__()
         self.lxh = torch.nn.Linear(input_size + 2 * h_size, 4 * state_size)
         self.h_size = h_size
-        # pyre-fixme[4]: Attribute must be annotated.
         self.out_size = state_size - h_size
 
     # jit does not like Optional, so we have to use bool variables and NoneT
@@ -308,7 +305,6 @@ class S2Cell(torch.nn.Module):
         self.lxh = torch.nn.Linear(input_size + 2 * h_size, 4 * state_size)
         self.h_size = h_size
         self.state_size = state_size
-        # pyre-fixme[4]: Attribute must be annotated.
         self.out_size = state_size - h_size
 
     # jit does not like Optional, so we have to use bool variables and NoneT
@@ -403,13 +399,9 @@ class DilatedRNNStack(torch.nn.Module):
         self.nn_structure = nn_structure
         self.cell_name = cell_name
         self.input_size = input_size
-        # pyre-fixme[4]: Attribute must be annotated.
         self.h_size = h_size
-        # pyre-fixme[4]: Attribute must be annotated.
         self.jit = jit
-        # pyre-fixme[4]: Attribute must be annotated.
         self.h_state_store = []
-        # pyre-fixme[4]: Attribute must be annotated.
         self.c_state_store = []
         # pyre-fixme[4]: Attribute must be annotated.
         self.max_dilation = np.max([np.max(t) for t in nn_structure])
@@ -418,7 +410,6 @@ class DilatedRNNStack(torch.nn.Module):
 
         out_size = self._validate(cell_name, state_size, h_size)
 
-        # pyre-fixme[4]: Attribute must be annotated.
         self.cells = []
         layer = 0
         iblock = 0
@@ -453,19 +444,15 @@ class DilatedRNNStack(torch.nn.Module):
                 self.cells.append(cell)
                 layer += 1
         if isinstance(output_size, int) and output_size > 0:
-            # pyre-fixme[4]: Attribute must be annotated.
             self.adaptor = torch.nn.Linear(out_size, output_size)
         elif output_size is None:
-            # pyrefly: ignore [bad-assignment]
             self.adaptor = None
         else:
             msg = f"output_size should be either None (for encoder) or a positive integer, but receives {output_size}."
             logging.error(msg)
             raise ValueError(msg)
 
-        # pyre-fixme[4]: Attribute must be annotated.
         self.block_num = block_num
-        # pyre-fixme[4]: Attribute must be annotated.
         self.out_size = out_size
 
     def _validate(self, cell_name: str, state_size: int, h_size: Optional[int]) -> int:
@@ -894,7 +881,6 @@ class GMFeature:
     """
 
     def __init__(self, feature_type: Union[List[str], str]) -> None:
-        # pyre-fixme[4]: Attribute must be annotated.
         self.all_possible_gmfeatures = all_possible_gmfeatures
         if isinstance(feature_type, str):
             feature_type = [feature_type]
@@ -987,7 +973,6 @@ class GMFeature:
             feature.append(
                 np.concatenate(
                     [
-                        # pyre-fixme[16]: `int` has no attribute `values`.
                         pdt.day.values,
                         pdt.month.values,
                         pdt.dayofweek.values,
@@ -1303,7 +1288,6 @@ class GMParam:
             self.quantile_weight = quantile_weight
 
         if validation_metric is None:
-            # pyre-fixme[4]: Attribute must be annotated.
             self.validation_metric = all_validation_metric_name
         else:
             if isinstance(validation_metric, list):
@@ -1312,7 +1296,6 @@ class GMParam:
                         msg = f"Invalid metric_name {name}!"
                         logging.error(msg)
                         raise ValueError(msg)
-                # pyrefly: ignore [bad-assignment]
                 self.validation_metric = validation_metric
             else:
                 msg = f"validation_metric should be a list of str, but receives {type(validation_metric)}."
@@ -1580,7 +1563,6 @@ def gmparam_from_string(gmstring: str) -> GMParam:
     return gmparam
 
 
-# pyre-fixme[3]: Return annotation cannot contain `Any`.
 def gmpreprocess(
     gmparam: GMParam,
     # pyre-fixme[2]: Parameter annotation cannot contain `Any`.

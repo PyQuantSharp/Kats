@@ -20,15 +20,12 @@ from kats.detectors.cusum_detection import (
     VectorizedCUSUMDetector,
 )
 from parameterized.parameterized import parameterized
-
-# pyrefly: ignore [missing-module-attribute]
 from scipy.stats import chi2  # @manual
 from sklearn.datasets import make_spd_matrix
 
 
 class CUSUMDetectorTest(TestCase):
     def setUp(self) -> None:
-        # pyrefly: ignore [bad-argument-type]
         np.random.seed(10)
 
         # increasing with variance detection setup
@@ -274,19 +271,15 @@ class CUSUMDetectorTest(TestCase):
                 cos_j = np.cos(lambda_p * j)
                 sin_j = np.sin(lambda_p * j)
                 gamma_jtp1[j - 1] = (
-                    # pyre-fixme[16]: Item `float` of `ndarray[Any, dtype[Any]] |
                     #  float` has no attribute `__getitem__`.
                     gamma_jt[j - 1] * cos_j
-                    # pyre-fixme[16]: Item `float` of `ndarray[Any, dtype[Any]] |
                     #  float` has no attribute `__getitem__`.
                     + gamma_star_jt[j - 1] * sin_j
                     + noise_std * np.random.randn()
                 )
                 gamma_star_jtp1[j - 1] = (
-                    # pyre-fixme[16]: Item `float` of `ndarray[Any, dtype[Any]] |
                     #  float` has no attribute `__getitem__`.
                     -gamma_jt[j - 1] * sin_j
-                    # pyre-fixme[16]: Item `float` of `ndarray[Any, dtype[Any]] |
                     #  float` has no attribute `__getitem__`.
                     + gamma_star_jt[j - 1] * cos_j
                     + noise_std * np.random.randn()
@@ -301,14 +294,12 @@ class CUSUMDetectorTest(TestCase):
     def test_seasonality_with_increasing_trend_cp_index(self) -> None:
         self.assertGreaterEqual(
             self.season_metadata.cp_index,
-            # pyre-fixme[6]: For 2nd param expected `SupportsDunderLE[Variable[_T]]`
             #  but got `int`.
             self.periodicity * (self.total_cycles - 1),
         )
 
     def test_logging_multivariate_error(self) -> None:
         # test multivariate error
-        # pyrefly: ignore [bad-argument-type]
         np.random.seed(10)
         df_multi_var = pd.DataFrame(
             {
@@ -335,7 +326,6 @@ class CUSUMDetectorTest(TestCase):
     # pyre-ignore[2]: Parameter must be annotated.
     def test_logging_neg_magnitude(self, level, mag_q) -> None:
         # test logging setup - negative in magnitude
-        # pyrefly: ignore [bad-argument-type]
         np.random.seed(10)
         df_neg = pd.DataFrame({"no_change": -np.random.normal(1, 0.2, 60)})
 
@@ -365,7 +355,6 @@ class MultiCUSUMDetectorTest(TestCase):
         # increasing setup
         self.D = 10
         random_state = 10
-        # pyrefly: ignore [bad-argument-type]
         np.random.seed(random_state)
         mean1 = np.ones(self.D)
         mean2 = mean1 * 2
@@ -524,7 +513,6 @@ class MultiCUSUMDetectorTest(TestCase):
     def test_no_changepoint(self) -> None:
         D = 10
         random_state = 10
-        # pyrefly: ignore [bad-argument-type]
         np.random.seed(random_state)
         mean = np.ones(D)
         sigma = make_spd_matrix(D, random_state=random_state)
@@ -539,7 +527,6 @@ class MultiCUSUMDetectorTest(TestCase):
 
 class VectorizedCUSUMDetectorTest(TestCase):
     def setUp(self) -> None:
-        # pyrefly: ignore [bad-argument-type]
         np.random.seed(10)
 
         # increasing with variance detection setup
@@ -631,7 +618,6 @@ class VectorizedCUSUMDetectorTest(TestCase):
         return True
 
     def test_vectorized_detector_results(self) -> None:
-        # pyrefly: ignore [bad-argument-type]
         np.random.seed(0)
         y = pd.DataFrame(
             {

@@ -89,14 +89,11 @@ class STDGlobalModel:
         self.period: Optional[int] = self._get_period(period)
 
         if self.decomposition == "multiplicative":
-            # pyre-fixme Missing attribute annotation [4]: Attribute `deseasonal_operator` of class `STDGlobalModel` has no type specified.
             self.deseasonal_operator = operator.truediv
-            # pyre-fixme Missing attribute annotation [4]: Attribute `reseasonal_operator` of class `STDGlobalModel` has no type specified.
             self.reseasonal_operator = operator.mul
         else:
             assert self.decomposition == "additive"
             self.deseasonal_operator = operator.sub
-            # pyrefly: ignore [bad-assignment]
             self.reseasonal_operator = operator.add
 
         self.gm: Union[None, GMModel, GMEnsemble] = None
@@ -168,7 +165,6 @@ class STDGlobalModel:
                         time_col_name=time_col_name,
                     ),
                     "seasonal": TimeSeriesData(
-                        # pyrefly: ignore [bad-argument-type]
                         decomp_res[[time_col_name, tag]],
                         # pyrefly: ignore [bad-argument-type]
                         time_col_name=time_col_name,
@@ -270,7 +266,6 @@ class STDGlobalModel:
         if self.multi:
             pool = Pool(self.max_core)
             prepared_TSs = pool.starmap(
-                # pyrefly: ignore [bad-index]
                 self._prepare_ts,
                 # pyrefly: ignore [bad-index]
                 [(key, test_TSs[key], steps) for key in keys],
@@ -285,7 +280,6 @@ class STDGlobalModel:
         )
 
         # generate fcsts using GM
-        # pyre-fixme Undefined attribute [16]: Item `None` of `typing.Union[None, GMEnsemble, GMModel]` has no attribute `predict`.
         gm_fcsts = self.gm.predict({t[0]: t[1] for t in prepared_TSs}, steps=steps)
 
         if self.multi:

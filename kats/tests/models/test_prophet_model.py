@@ -354,7 +354,6 @@ class ProphetModelTest(TestCase):
         raw: Optional[bool],
         truth: pd.DataFrame,
     ) -> None:
-        # pyrefly: ignore [bad-argument-type]
         np.random.seed(0)
         kwargs = {}
         if freq is not None:

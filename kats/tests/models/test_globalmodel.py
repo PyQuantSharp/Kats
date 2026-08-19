@@ -85,7 +85,6 @@ def get_ts(
     """
     Helper function for generating TimeSeriesData.
     """
-    # pyrefly: ignore [bad-argument-type]
     np.random.seed(seed)
     t = pd.Series(pd.date_range(start_time, freq=freq, periods=n))
     val = np.random.randn(n)
@@ -143,9 +142,7 @@ def get_gmmodel_mock_2(gmparam: GMParam) -> mock.MagicMock:
     return gm_mock
 
 
-# pyre-fixme[5]: Global expression must be annotated.
 TSs = [get_ts(i * 5, "2020-05-06", i) for i in range(20, 30)]
-# pyre-fixme[5]: Global expression must be annotated.
 valid_TSs = [get_ts(i * 2, "2020-05-06", i) for i in range(20, 30)]
 
 ts_missing_val = TimeSeriesData(

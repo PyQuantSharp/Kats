@@ -24,7 +24,6 @@ with warnings.catch_warnings():
     from statsmodels.distributions.empirical_distribution import ECDF
 
 # from numpy.typing import ArrayLike
-# pyre-fixme[24]: Generic type `np.ndarray` expects 2 type parameters.
 ArrayLike = Union[np.ndarray, Sequence[float]]
 
 
@@ -434,7 +433,6 @@ def mean_absolute_error(
     err = absolute_error(y_true, y_pred)
     if not err.shape[0]:
         return np.nan
-    # pyrefly: ignore [bad-argument-type]
     ma = np.ma.MaskedArray(err, np.isnan(err))
     err = np.ma.average(ma, weights=sample_weight, axis=0)
     if isinstance(multioutput, str):

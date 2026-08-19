@@ -94,13 +94,9 @@ class SimpleHeuristicModel(Model[SimpleHeuristicModelParams]):
             logging.error(msg)
             raise ValueError(msg)
 
-        # pyre-fixme[4]: Attribute annotation cannot contain `Any`.
         self.model = self._calc_last
-        # pyre-fixme[4]: Attribute annotation cannot contain `Any`.
         self.y_fcst = None
-        # pyre-fixme[4]: Attribute annotation cannot contain `Any`.
         self.y_fcst_lower = None
-        # pyre-fixme[4]: Attribute annotation cannot contain `Any`.
         self.y_fcst_upper = None
         self.fcst_df = pd.DataFrame(data=None)
 

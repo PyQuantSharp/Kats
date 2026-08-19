@@ -128,7 +128,6 @@ class CusumScoreFunction(Enum):
 
 
 # Score Function Constants
-# pyre-fixme
 SCORE_FUNC_DICT = {
     CusumScoreFunction.change.value: change,
     CusumScoreFunction.percentage_change.value: percentage_change,
@@ -360,7 +359,6 @@ class CUSUMDetectorModel(DetectorModel):
     def _fit_vec_row(
         self,
         vec_data_row: TimeSeriesData,
-        # pyre-fixme[11]: Annotation `Timedelta` is not defined as a type.
         scan_window: Union[int, pd.Timedelta],
         changepoints: List[CUSUMChangePoint],  # len = 1 or 0
         time_adjust: pd.Timedelta,

@@ -198,7 +198,6 @@ class LSTMModel(Model[LSTMParams]):
         loss_function = nn.MSELoss()
 
         # optimizer
-        # pyre-fixme[6]: For 2nd param expected `float` but got `Optional[float]`.
         optimizer = torch.optim.Adam(model.parameters(), lr=self.lr)
 
         # inout_seq

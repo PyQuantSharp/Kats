@@ -36,8 +36,6 @@ import pandas as pd
 from kats.consts import SearchMethodEnum, TimeSeriesChangePoint, TimeSeriesData
 from kats.detectors.detector import Detector
 from scipy.special import logsumexp  # @manual
-
-# pyrefly: ignore [missing-module-attribute]
 from scipy.stats import invgamma, linregress, nbinom, norm  # @manual
 
 try:
@@ -59,7 +57,6 @@ SupportedModelType = Union[
 
 # from np.typing import ArrayLike
 # The current version of numpy doesn't support typing but future ones do
-# pyre-fixme[24]: Generic type `np.ndarray` expects 2 type parameters.
 ArrayLike = np.ndarray
 
 
@@ -90,7 +87,6 @@ class BOCPDChangePoint(TimeSeriesChangePoint):
 
     def __init__(
         self,
-        # pyre-fixme[11]: Annotation `Timestamp` is not defined as a type.
         start_time: pd.Timestamp,
         end_time: pd.Timestamp,
         confidence: float,
@@ -759,11 +755,9 @@ class _BayesOnlineChangePoint(Detector):
         # the same calculation throughout with fewer additional checks
         # for univariate and bivariate data.
         if not data.is_univariate():
-            # pyre-fixme[4]: Attribute annotation cannot contain `Any`.
             self._ts_slice = slice(None)
             self.P = data.value.shape[1]  # Number of time series
             self._ts_names = list(self.data.value.columns)
-            # pyre-fixme[4]: Attribute annotation cannot contain `Any`.
             self.data_values = data.value.values
         else:
             self.P = 1
@@ -775,7 +769,6 @@ class _BayesOnlineChangePoint(Detector):
 
             self.data_values = np.expand_dims(data.value.values, axis=1)
 
-        # pyre-fixme[4]: Attribute annotation cannot contain `Any`.
         self.posterior_predictive = np.array([0.0])
         self._posterior_shape = (self.T, self.T, self.P)
         self._message_shape = (self.T, self.P)
@@ -842,7 +835,6 @@ class _BayesOnlineChangePoint(Detector):
         # initialize first step
         # P(r_0=1) = 1
         rt_posterior[0, 0] = 1.0
-        # pyre-fixme[6]: For 1st argument expected `float` but got `ndarray[Any,
         #  dtype[Any]]`.
         model.update_sufficient_stats(x=self.data_values[0, self._ts_slice])
         # To avoid growing a large dynamic list, we construct a large
@@ -872,7 +864,6 @@ class _BayesOnlineChangePoint(Detector):
             # this arr has a size of t, each element says what is the predictive prob.
             # of a point, it the current streak began at t
             # Step 3 of paper
-            # pyre-fixme[6]: For 2nd argument expected `float` but got `ndarray[Any,
             #  dtype[Any]]`.
             pred_arr = model.pred_prob(t=i, x=this_pt)
 
@@ -882,10 +873,8 @@ class _BayesOnlineChangePoint(Detector):
 
             # record the mean/variance/prob for debugging
             if self.debug:
-                # pyre-fixme[6]: For 2nd argument expected `float` but got
                 #  `ndarray[Any, dtype[Any]]`.
                 pred_mean = model.pred_mean(t=i, x=this_pt)
-                # pyre-fixme[6]: For 2nd argument expected `float` but got
                 #  `ndarray[Any, dtype[Any]]`.
                 pred_std = model.pred_std(t=i, x=this_pt)
                 pred_mean_arr[i, 0:i, self._ts_slice] = pred_mean.reshape(-1)
@@ -958,7 +947,6 @@ class _BayesOnlineChangePoint(Detector):
             rt_posterior[i, 0 : (i + 1), self._ts_slice] = np.exp(log_posterior)
 
             # step 8
-            # pyre-fixme[6]: For 1st argument expected `float` but got `ndarray[Any,
             #  dtype[Any]]`.
             model.update_sufficient_stats(x=this_pt)
 
@@ -1010,7 +998,7 @@ class _BayesOnlineChangePoint(Detector):
             ts_names = self._ts_names
 
         axs = []
-        # pyrefly: ignore [bad-argument-type, not-iterable]
+        # pyrefly: ignore [not-iterable]
         for ts_ix, ts_name in enumerate(ts_names):
             cp_output = cp_outputs[ts_name]
             change_points = cp_output["change_points"]
@@ -1242,15 +1230,12 @@ class _NormalKnownPrec(_PredictiveModel):
             # If the user didn't specify the priors as multivariate
             # then we assume the same prior(s) over all time series.
             if self.mu_0 is not None and isinstance(self.mu_0, float):
-                # pyre-fixme[8]: Attribute has type `Optional[float]`; used as
                 #  `ndarray[Any, dtype[Any]]`.
                 self.mu_0 = np.repeat(self.mu_0, self.P)
             if self.mu_0 is not None and isinstance(self.lambda_0, float):
-                # pyre-fixme[8]: Attribute has type `Optional[float]`; used as
                 #  `ndarray[Any, dtype[Any]]`.
                 self.lambda_0 = np.repeat(self.lambda_0, self.P)
             if self.mu_0 is not None and isinstance(self.lambda_val, float):
-                # pyre-fixme[8]: Attribute has type `Optional[float]`; used as
                 #  `ndarray[Any, dtype[Any]]`.
                 self.lambda_val = np.repeat(self.lambda_val, self.P)
             self._data_shape = (self._maxT, self.P)
@@ -1282,7 +1267,6 @@ class _NormalKnownPrec(_PredictiveModel):
                 np.expand_dims(self.mu_0 * self.lambda_0, axis=0), self._maxT, axis=0
             )
             self._prec_arr: npt.NDArray = np.repeat(
-                # pyre-fixme[6]: For 1st argument expected `Union[Sequence[Sequence[S...
                 np.expand_dims(self.lambda_0, axis=0),
                 self._maxT,
                 axis=0,
@@ -1316,7 +1300,6 @@ class _NormalKnownPrec(_PredictiveModel):
 
         # variance of the mean: \lambda_0 = \frac{N}{\sigma^2}
         if data.is_univariate():
-            # pyre-fixme[58]: `/` is not supported for operand types `float` and
             #  `Union[float, Series]`.
             self.lambda_0 = 1.0 / data_arr.var(axis=0)
         else:
@@ -1598,10 +1581,8 @@ class _BayesianLinReg(_PredictiveModel):
         # this is to make sure the results are consistent
         # and tests don't break randomly
         seed_value = 100
-        # pyrefly: ignore [bad-argument-type]
         np.random.seed(seed_value)
 
-        # pyre-fixme[24]: Generic type `np.ndarray` expects 2 type parameters.
         sample_sigma_squared = cast(np.ndarray, invgamma.rvs(a_n, scale=b_n, size=1))
 
         # Sample a beta value from Normal(mu_n, sigma^2 * inv(lambda_n))
@@ -1680,7 +1661,6 @@ class _BayesianLinReg(_PredictiveModel):
             lambda_n = xtx + self.lambda_prior
             mu_n = np.matmul(
                 np.linalg.inv(lambda_n),
-                # pyre-fixme[6]: For 2nd argument expected `Union[Sequence[Sequence[S...
                 np.squeeze(np.matmul(self.lambda_prior, self.mu_prior) + xty),
             )
 
@@ -1688,9 +1668,7 @@ class _BayesianLinReg(_PredictiveModel):
             mu_prior = self.mu_prior
             assert mu_prior is not None
             mu_prec_prior = np.matmul(
-                # pyre-fixme[6]: For 2nd argument expected `Union[Sequence[Sequence[S...
                 np.matmul(mu_prior.transpose(), self.lambda_prior),
-                # pyre-fixme[6]: For 2nd argument expected `Union[Sequence[Sequence[S...
                 self.mu_prior,
             )
             mu_prec_n = np.matmul(np.matmul(mu_n.transpose(), lambda_n), mu_n)
@@ -1791,7 +1769,6 @@ class _BayesianLinReg(_PredictiveModel):
             self._x = np.array([1.0, current_t]).reshape(-1, 2)
         else:
             new_x = np.array([1.0, current_t]).reshape(-1, 2)
-            # pyre-fixme[6]: For 1st argument expected `Sequence[Union[Sequence[Seque...
             self._x = np.vstack([self._x, new_x])
 
         self.t += 1

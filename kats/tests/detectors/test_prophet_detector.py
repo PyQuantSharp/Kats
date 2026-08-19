@@ -36,7 +36,6 @@ class TestProphetDetector(TestCase):
     def create_random_ts(
         self, seed: int, length: int, magnitude: float, slope_factor: float
     ) -> TimeSeriesData:
-        # pyrefly: ignore [bad-argument-type]
         np.random.seed(seed)
         sim = Simulator(n=length, freq="1D", start=pd.to_datetime(START_DATE_TEST_DATA))
 
@@ -57,7 +56,6 @@ class TestProphetDetector(TestCase):
         signal_to_noise_ratio: float = 0.1,
         freq: str = "1D",
     ) -> TimeSeriesData:
-        # pyrefly: ignore [bad-argument-type]
         np.random.seed(seed)
         sim = Simulator(n=length, freq=freq, start=pd.to_datetime(START_DATE_TEST_DATA))
 
@@ -74,7 +72,6 @@ class TestProphetDetector(TestCase):
         max_val: float,
         signal_to_noise_ratio: float,
     ) -> TimeSeriesData:
-        # pyrefly: ignore [bad-argument-type]
         np.random.seed(seed)
 
         sim = Simulator(n=length, freq=freq, start=pd.to_datetime(START_DATE_TEST_DATA))
@@ -111,7 +108,6 @@ class TestProphetDetector(TestCase):
         magnitude_weekend: float = 2,
         signal_to_noise_ratio: float = 0.1,
     ) -> TimeSeriesData:
-        # pyrefly: ignore [bad-argument-type]
         np.random.seed(seed)
         ts = TimeSeriesData()
         points_day = int(pd.to_timedelta("1D") / pd.to_timedelta(freq))
@@ -162,7 +158,6 @@ class TestProphetDetector(TestCase):
     ) -> None:
         # Add an anomaly that is half of a sine wave
         # start time and freq don't matter, since we only care about the values
-        # pyrefly: ignore [bad-argument-type]
         np.random.seed(seed)
 
         anomaly_sim = Simulator(
@@ -228,7 +223,6 @@ class TestProphetDetector(TestCase):
         event_end_ratio: float,
         event_relative_magnitude: float,
     ) -> TimeSeriesData:
-        # pyrefly: ignore [bad-argument-type]
         np.random.seed(seed)
         sim = Simulator(n=length, freq=freq, start=pd.to_datetime(START_DATE_TEST_DATA))
 
@@ -585,7 +579,6 @@ class TestProphetDetector(TestCase):
         # add anomaly at index 95
         ts.value[95] += 100
 
-        # pyrefly: ignore [bad-argument-type]
         np.random.seed(0)
         z_score_model = ProphetDetectorModel(score_func=ProphetScoreFunction.z_score)
         z_score_response = z_score_model.fit_predict(ts[90:], ts[:90])
@@ -618,7 +611,6 @@ class TestProphetDetector(TestCase):
 
         # Corrected Z-score should be the same as legacy Z-score if using default
         # scoring confidence interval
-        # pyrefly: ignore [bad-argument-type]
         np.random.seed(0)
         legacy_z_score_model = ProphetDetectorModel(
             score_func=ProphetScoreFunction.z_score, use_legacy_z_score=False
@@ -631,7 +623,6 @@ class TestProphetDetector(TestCase):
         )
 
         # If using custom scoring confidence interval, corrected Z-scores will differ
-        # pyrefly: ignore [bad-argument-type]
         np.random.seed(0)
         legacy_z_score_model = ProphetDetectorModel(
             score_func=ProphetScoreFunction.z_score,
@@ -1073,7 +1064,6 @@ class TestProphetDetector(TestCase):
         z-scores for positive anomalies, and that training on data with negative noise
         results in lower z-scores for negative anomalies.
         """
-        # pyrefly: ignore [bad-argument-type]
         np.random.seed(0)
         test_ts = self.create_ts(length=100 * 24, freq="1h", signal_to_noise_ratio=0)
         ts1 = self.create_ts(length=100 * 24, freq="1h", signal_to_noise_ratio=0)
@@ -1121,7 +1111,6 @@ class TestProphetDetector(TestCase):
         # Then
         self.assertEqual(len(response.scores), 20)
         self.assertIsNotNone(response.predicted_ts)
-        # pyre-ignore[16]: Optional type has no attribute `value`.
         self.assertTrue(all(pd.notna(response.predicted_ts.value)))
 
     def test_saturation_range_validation(self) -> None:
@@ -1158,7 +1147,6 @@ class TestProphetDetector(TestCase):
 
     def test_saturation_range_enforcement(self, seed: int = 42) -> None:
         """Test that logistic model respects saturation range while linear model does not"""
-        # pyrefly: ignore [bad-argument-type]
         np.random.seed(seed)
         sim = Simulator(n=500, freq="1h", start=pd.to_datetime("2025-01-01"))
         sim.add_trend(magnitude=100.0)
@@ -1216,7 +1204,6 @@ class TestProphetDetector(TestCase):
     def test_growth_types_linear_and_flat_are_passed_to_model(
         self, seed: int = 42
     ) -> None:
-        # pyrefly: ignore [bad-argument-type]
         np.random.seed(seed)
         sim = Simulator(n=100, freq="1D", start=pd.to_datetime(START_DATE_TEST_DATA))
         sim.add_trend(magnitude=20.0)
@@ -1229,7 +1216,6 @@ class TestProphetDetector(TestCase):
             self.assertEqual(model_dict["growth"], growth_type)
 
     def test_growth_type_logistic_is_passed_to_model(self, seed: int = 42) -> None:
-        # pyrefly: ignore [bad-argument-type]
         np.random.seed(seed)
         sim = Simulator(n=100, freq="1D", start=pd.to_datetime(START_DATE_TEST_DATA))
         sim.add_trend(magnitude=20.0)
@@ -1270,7 +1256,6 @@ class TestProphetDetector(TestCase):
         self, seed: int = 42
     ) -> None:
         """Test that a flat growth model gives a slope of zero when trained on trended data"""
-        # pyrefly: ignore [bad-argument-type]
         np.random.seed(seed)
         sim = Simulator(n=101, freq="1D", start=pd.to_datetime(START_DATE_TEST_DATA))
         sim.add_trend(magnitude=1)

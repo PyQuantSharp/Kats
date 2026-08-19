@@ -29,7 +29,6 @@ def generate_multi_ts_data(
     date_start_str: str = "2020-01-01 00:00:00",
     include_start_point: bool = True,
 ) -> TimeSeriesData:
-    # pyrefly: ignore [bad-argument-type]
     np.random.seed(0)
     date_start = datetime.strptime(date_start_str, "%Y-%m-%d %H:%M:%S")
     multi_ts_val = np.random.normal(10, 3, [length, 10])
@@ -46,7 +45,6 @@ def generate_multi_ts_data(
     multi_ts_df = pd.DataFrame(multi_ts_val)
     multi_ts_df.columns = ["val_" + str(i) for i in range(10)]
     multi_ts_df = pd.concat([pd.Series(ts_time, name="time"), multi_ts_df], axis=1)
-    # pyre-fixme[6]: For 1st argument expected `Optional[DataFrame]` but got
     #  `Union[DataFrame, Series]`.
     ts = TimeSeriesData(multi_ts_df)
     return ts
@@ -58,7 +56,6 @@ def generate_data_with_sudden_granularity_changes(length: int = 200) -> TimeSeri
     (e.g., before 2 weeks ago, hourly data; after 2 weeks ago, 15 minute granularity)
     Common with ODS data because of ODS rollups
     """
-    # pyrefly: ignore [bad-argument-type]
     np.random.seed(0)
     len_list = [length // 4, length // 4, length // 4, length - length // 4 * 3]
     gran_list = [3600, 900, 600, 300]
@@ -90,7 +87,6 @@ def generate_data_with_individual_missing_datapoints(
     Generate data with individual missing datapoints
     Most often found when counting in Scuba without fills
     """
-    # pyrefly: ignore [bad-argument-type]
     np.random.seed(0)
 
     ts = generate_multi_ts_data(
@@ -123,7 +119,6 @@ def generate_irregular_granularity_data(
     Generate irregular granularity data
     Most often found in ODS
     """
-    # pyrefly: ignore [bad-argument-type]
     np.random.seed(seed)
     n = int(length * percentage)
 
@@ -138,7 +133,6 @@ def generate_irregular_granularity_data(
     )[np.random.choice(list(range(length)), n, replace=False)]
 
     multi_ts_df = pd.concat([pd.Series(ts_time, name="time"), multi_ts_df], axis=1)
-    # pyre-fixme[6]: For 1st argument expected `Optional[DataFrame]` but got
     #  `Union[DataFrame, Series]`.
     ts = TimeSeriesData(multi_ts_df)
     return ts

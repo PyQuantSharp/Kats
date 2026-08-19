@@ -11,7 +11,6 @@ from typing import Dict, List
 
 import numpy as np
 import pandas as pd
-# pyre-fixme[21]: Could not find name `Timestamp` in `pandas`.
 from pandas import Timestamp
 
 AIR_FCST_LINEAR_95 = pd.DataFrame(
@@ -4772,7 +4771,6 @@ METALEARNING_TEST_T2 = pd.DataFrame(
     }
 )
 
-# pyre-fixme[5]: Global expression must be annotated.
 METALEARNING_TEST_T2_FEATURES = {
     "length": 60,
     "mean": 0.8889935204889182,
@@ -4815,7 +4813,6 @@ METALEARNING_TEST_T2_FEATURES = {
     "hw_gamma": 0.26315604715898244,
 }
 
-# pyre-fixme[5]: Global expression must be annotated.
 METALEARNING_TEST_FEATURES = [
     [
         1.08565103,

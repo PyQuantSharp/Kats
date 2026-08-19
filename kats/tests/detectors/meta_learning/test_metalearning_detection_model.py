@@ -31,7 +31,6 @@ def generate_meta_data(n: int) -> pd.DataFrame:
 
 class MetaDetectModelSelectTest(TestCase):
     def setUp(self) -> None:
-        # pyrefly: ignore [bad-argument-type]
         np.random.seed(0)
         self.df = generate_meta_data(100)
         self.meta_detector = MetaDetectModelSelect(self.df)

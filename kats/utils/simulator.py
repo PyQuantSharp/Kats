@@ -20,8 +20,6 @@ import numpy.typing as npt
 import pandas as pd
 from kats.consts import TimeSeriesData
 from pandas.tseries.frequencies import to_offset
-
-# pyrefly: ignore [missing-module-attribute]
 from scipy.stats import norm  # @manual
 
 # A TimedeltaLike object represents a time offset.
@@ -69,7 +67,6 @@ class Simulator:
         self.start = start
 
         # create time
-        # pyre-fixme[4]: Attribute must be annotated.
         self.time = pd.date_range(
             start=start,
             freq=freq,
@@ -134,7 +131,6 @@ class Simulator:
         p_max = len(ar)
 
         # add theta_0=1 to ma coefficients
-        # pyre-fixme[9]: ma has type `List[float]`; used as `ndarray[Any, dtype[Any]]`.
         ma = np.append(1, ma)
         q_max = len(ma)
 
@@ -270,7 +266,6 @@ class Simulator:
         """
         Convert TimedeltaLike object to time offset in seconds
         """
-        # pyre-fixme[16]: `Optional` has no attribute `nanos`.
         return to_offset(period).nanos / 1e9
 
     def _add_component(
@@ -354,7 +349,6 @@ class Simulator:
         if z_score_arr is None:
             z_score_arr = []
 
-        # pyrefly: ignore [bad-argument-type]
         np.random.seed(seed=random_seed)
 
         # if cp_arr is not sorted, sort it
@@ -552,7 +546,7 @@ class Simulator:
                 anomaly_arr,
                 z_score_arr,
             )
-            # pyrefly: ignore [bad-assignment, bad-typed-dict-key]
+            # pyrefly: ignore [bad-assignment]
             df_dict[f"value{i + 1}"] = yval
 
         ts_df = pd.DataFrame(df_dict, copy=False)

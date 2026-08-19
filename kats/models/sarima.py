@@ -17,7 +17,6 @@ from kats.utils.parameter_tuning_utils import get_default_sarima_parameter_searc
 from statsmodels.tsa.statespace.mlemodel import MLEResults
 from statsmodels.tsa.statespace.sarimax import SARIMAX
 
-# pyre-fixme[24]: Generic type `np.ndarray` expects 2 type parameters.
 ArrayLike = np.ndarray
 
 

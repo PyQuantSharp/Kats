@@ -55,14 +55,10 @@ class GMDataLoader:
             ) != len(keys):
                 msg = "The keys of dataset and test_dataset are not the same."
                 raise ValueError(msg)
-            # pyre-fixme[4]: Attribute must be annotated.
             self.test_lengths = test_lengths
         else:
-            # pyrefly: ignore [bad-assignment]
             self.test_lengths = None
-        # pyre-fixme[4]: Attribute must be annotated.
         self.keys = keys
-        # pyre-fixme[4]: Attribute must be annotated.
         self.lengths = lengths
         # pyre-fixme[4]: Attribute must be annotated.
         self._batch_ids = None
@@ -71,10 +67,8 @@ class GMDataLoader:
         # pyre-fixme[4]: Attribute must be annotated.
         self._last_batch = None
         self._idx = -1
-        # pyre-fixme[4]: Attribute must be annotated.
         self.num = len(dataset)
         if magnitude > 0:
-            # pyre-fixme[4]: Attribute must be annotated.
             self.magnitude = magnitude
 
     def _valid_dataset(
@@ -219,18 +213,13 @@ class GMBatch:
             None if valid_TSs is None else {idx: valid_TSs[idx] for idx in batch_ids}
         )
 
-        # pyre-fixme[4]: Attribute must be annotated.
         self.train = train
-        # pyre-fixme[4]: Attribute must be annotated.
         self.valid = valid
 
-        # pyre-fixme[4]: Attribute must be annotated.
         self.training = mode == "train"
-        # pyre-fixme[4]: Attribute must be annotated.
         self.batch_size = len(train)
         self.batch_ids = batch_ids
         self.training_encoder_step_num = 1
-        # pyre-fixme[4]: Attribute must be annotated.
         self.test_encoder_step_num = params.fcst_step_num
 
         (
@@ -250,14 +239,10 @@ class GMBatch:
 
         self.batch_size = len(train)
 
-        # pyre-fixme[4]: Attribute must be annotated.
         self.train_length = reduced_length
-        # pyre-fixme[4]: Attribute must be annotated.
         self.valid_length = reduced_valid_length
 
-        # pyre-fixme[4]: Attribute must be annotated.
         self.train_indices = train_indices
-        # pyre-fixme[4]: Attribute must be annotated.
         self.valid_indices = valid_indices
 
         tdtype = torch.get_default_dtype()
@@ -271,14 +256,10 @@ class GMBatch:
             init_seasonality[init_seasonality > params.init_seasonality[1]] = (
                 params.init_seasonality[1]
             )
-            # pyre-fixme[4]: Attribute must be annotated.
             self.init_seasonality = torch.tensor(init_seasonality, dtype=tdtype)
         else:
-            # pyrefly: ignore [bad-assignment]
             self.init_seasonality = None
-        # pyre-fixme[4]: Attribute must be annotated.
         self.offset = torch.tensor(offset, dtype=tdtype).view(-1, 1)
-        # pyre-fixme[4]: Attribute must be annotated.
         self.indices = train_indices + valid_indices
 
         if valid or (not self.training):
@@ -290,21 +271,16 @@ class GMBatch:
             x = train_x
             time = train_time
         # store info for gmfeature
-        # pyre-fixme[4]: Attribute must be annotated.
         self.gmfeature = params.gmfeature
-        # pyre-fixme[4]: Attribute must be annotated.
         self.base_features = (
             params.gmfeature.get_base_features(x, time)
             if params.gmfeature is not None
             else None
         )
-        # pyre-fixme[4]: Attribute must be annotated.
         self.x_array = (
             x  # storing a np.ndarray copy of x for on-the-fly feature computing
         )
-        # pyre-fixme[4]: Attribute must be annotated.
         self.x = torch.tensor(x, dtype=tdtype)
-        # pyre-fixme[4]: Attribute must be annotated.
         self.time = time
 
     def _get_indices(
@@ -507,14 +483,12 @@ class GMBatch:
             min_val = (
                 train_ts.min
                 if valid is None
-                # pyre-fixme[6]: For 1st argument expected `Union[_SupportsArray[dtyp...
                 else np.min([train_ts.min, valid[idx].min])
             )
             if min_val <= 0:
                 max_val = (
                     train_ts.max
                     if valid is None
-                    # pyre-fixme[6]: For 1st argument expected `Union[_SupportsArray[...
                     else np.max([train_ts.max, valid[idx].max])
                 )
                 if min_val == max_val:  # receives a constant TS

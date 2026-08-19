@@ -27,8 +27,6 @@ from kats.detectors.interval_detector import (
     TwoSampleSchema,
 )
 from parameterized.parameterized import parameterized
-
-# pyrefly: ignore [missing-module-attribute]
 from scipy.stats import multivariate_normal, norm
 
 
@@ -288,12 +286,10 @@ class TestIntervalDetectorModel(TestCase):
         expected = multivariate_normal.cdf(
             upper,
             mean=mean.flatten(),
-            # pyre-fixme[6]: Type stub incomplete - cov accepts ndarray
             cov=cov,
         ) - multivariate_normal.cdf(
             lower,
             mean=mean.flatten(),
-            # pyre-fixme[6]: Type stub incomplete - cov accepts ndarray
             cov=cov,
         )
         self.assertTrue(np.isclose(result, expected, atol=1e-5))

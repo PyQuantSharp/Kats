@@ -209,7 +209,6 @@ class STLFModel(Model[STLFParams]):
 
         if self.params.decomposition == "multiplicative":
             self.deseasonal_operator = operator.truediv
-            # pyre-fixme[4]: Attribute annotation cannot contain `Any`.
             self.reseasonal_operator = operator.mul
         else:
             assert self.params.decomposition == "additive"
@@ -349,27 +348,21 @@ class STLFModel(Model[STLFParams]):
         seasonality = decomp["seasonal"].value[-m:]
 
         self.y_fcst = self.reseasonal_operator(
-            # pyre-fixme[6]: For 2nd argument expected `Union[DataFrame, Series]`
             #  but got `ndarray[Any, dtype[Any]]`.
             fcst.fcst,
-            # pyre-fixme[6]: For 2nd argument expected `Union[DataFrame, Series]`
             #  but got `ndarray[Any, dtype[Any]]`.
             np.tile(seasonality, rep)[: fcst.shape[0]],
         )
         if ("fcst_lower" in fcst.columns) and ("fcst_upper" in fcst.columns):
             self.fcst_lower = self.reseasonal_operator(
-                # pyre-fixme[6]: For 2nd argument expected `Union[DataFrame,
                 #  Series]` but got `ndarray[Any, dtype[Any]]`.
                 fcst.fcst_lower,
-                # pyre-fixme[6]: For 2nd argument expected `Union[DataFrame,
                 #  Series]` but got `ndarray[Any, dtype[Any]]`.
                 np.tile(seasonality, rep)[: fcst.shape[0]],
             )
             self.fcst_upper = self.reseasonal_operator(
-                # pyre-fixme[6]: For 2nd argument expected `Union[DataFrame,
                 #  Series]` but got `ndarray[Any, dtype[Any]]`.
                 fcst.fcst_upper,
-                # pyre-fixme[6]: For 2nd argument expected `Union[DataFrame,
                 #  Series]` but got `ndarray[Any, dtype[Any]]`.
                 np.tile(seasonality, rep)[: fcst.shape[0]],
             )

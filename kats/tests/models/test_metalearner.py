@@ -52,19 +52,16 @@ TSData_const = TimeSeriesData(
 )
 
 # TS which has NAN values
-# pyre-fixme[5]: Global expression must be annotated.
 DATA_nan = METALEARNING_TEST_T2.copy()
 DATA_nan.iloc[10, 1] = np.nan
 TSData_nan = TimeSeriesData(DATA_nan)
 
 # TS which has INF values
-# pyre-fixme[5]: Global expression must be annotated.
 DATA_inf = METALEARNING_TEST_T2.copy()
 DATA_inf.iloc[10, 1] = np.inf
 TSData_inf = TimeSeriesData(DATA_inf)
 
 # TS which doesn't have constant frequency
-# pyre-fixme[5]: Global expression must be annotated.
 DATA_gap = METALEARNING_TEST_T2.copy()
 DATA_gap = DATA_gap.drop([3, 4])
 TSData_gap = TimeSeriesData(DATA_gap)
@@ -94,7 +91,6 @@ feature_names: List[str] = list(METALEARNING_TEST_T1_FEATURES.keys())
 # pyre-fixme[2]: Parameter must be annotated.
 def generate_meta_data(n):
     # generate meta data to initialize MetaLearnModelSelect
-    # pyrefly: ignore [bad-argument-type]
     np.random.seed(560)
     random.seed(560)
     spaces = {m: model.get_parameter_search_space() for m, model in base_models.items()}
@@ -105,7 +101,6 @@ def generate_meta_data(n):
     generators = {}
     for m, space in spaces.items():
         search_space = SearchSpace(
-            # pyrefly: ignore [bad-argument-type]
             [InstantiationBase.parameter_from_json(item) for item in space]
         )
         experiment = Experiment(
@@ -138,7 +133,6 @@ def generate_meta_data(n):
 # pyre-fixme[2]: Parameter must be annotated.
 def generate_meta_data_by_model(model, n, d=num_features):
     random.seed(560)
-    # pyrefly: ignore [bad-argument-type]
     np.random.seed(560)
     model = model.lower()
     if model in base_models:
@@ -164,7 +158,6 @@ def generate_meta_data_by_model(model, n, d=num_features):
 
 # pyre-fixme[5]: Global expression must be annotated.
 METALEARNING_METADATA = generate_meta_data(35)
-# pyre-fixme[5]: Global expression must be annotated.
 METALEARNING_METADATA_BY_MODEL = {
     t: generate_meta_data_by_model(t, 150)
     for t in [
@@ -213,7 +206,6 @@ def equals(v1, v2):
         else:
             return False
     except Exception as e:
-        # pyre-fixme[58]: `+` is not supported for operand types `str` and `Exception`.
         msg = "fail to compare the inputs and exception message is " + e
         raise ValueError(msg)
 

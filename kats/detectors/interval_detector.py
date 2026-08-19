@@ -54,8 +54,6 @@ from kats.detectors.detector import DetectorModel
 from kats.detectors.detector_consts import AnomalyResponse, ConfidenceBand
 from matplotlib import pyplot as plt
 from scipy.linalg import toeplitz
-
-# pyrefly: ignore [missing-module-attribute]
 from scipy.stats import beta, binom, multivariate_normal, norm
 from statsmodels.tsa.arima_process import ArmaProcess
 
@@ -539,7 +537,6 @@ class IntervalDetectorModel(DetectorModel, ABC):
 
     @property
     def json(self) -> Dict[str, str]:
-        # pyrefly: ignore [bad-return]
         return {
             **{
                 # pyrefly: ignore [bad-assignment]
@@ -955,7 +952,6 @@ class IntervalDetectorModel(DetectorModel, ABC):
         result = multivariate_normal.cdf(
             x=upper,
             mean=mean,
-            # pyrefly: ignore [bad-argument-type]
             cov=cov,
             allow_singular=allow_singular,
             maxpts=maxpts if maxpts else 1_000_000 * dim,
@@ -1343,7 +1339,6 @@ class IntervalDetectorModel(DetectorModel, ABC):
         def get_values(values: pd.Series, interval: ABInterval) -> pd.Series:
             assert interval.end_idx is not None
             end_idx = interval.end_idx
-            # pyre-fixme[7]: Expected `Series` but got `Union[DataFrame, Series]`.
             return pd.concat(
                 [
                     pd.Series(values[interval.start_idx]),
@@ -1634,9 +1629,7 @@ class TwoSampleIntervalDetectorModel(IntervalDetectorModel, ABC):
                 f"Expected test_type to be of TestType. Found {self.test_type}"
             )
         return ABTestResult(
-            # pyre-fixme[6]: For 3rd argument expected `Series` but got
             #  `Union[ndarray[Any, dtype[Any]], Series]`.
-            # pyre-fixme[6]: For 4th argument expected `Series` but got
             #  `Union[ndarray[Any, dtype[Any]], Series]`.
             test_statistic=test_statistic,
             stat_sig=stat_sig,

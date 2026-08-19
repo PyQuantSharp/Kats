@@ -72,7 +72,6 @@ class testTemporalHierarchicalModel(TestCase):
             ValueError,
             TemporalHierarchicalModel,
             ts,
-            # pyre-fixme[16]: Module `prophet` has no attribute `Prophet`.
             [prophet.Prophet()],
         )
         self.assertRaises(ValueError, TemporalHierarchicalModel, ts, [bm2])

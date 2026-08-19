@@ -17,7 +17,6 @@ try:
     import plotly.graph_objs as go
 
     _no_plotly = False
-    # pyre-fixme[5]: Global expression must be annotated.
     Figure = go.Figure
 except ImportError:
     _no_plotly = True
@@ -28,7 +27,6 @@ def plot_scatter_with_confints(
     val: List[float],
     confint: npt.NDArray,
     title: str,
-    # pyre-fixme[11]: Annotation `Figure` is not defined as a type.
 ) -> Figure:
     """Plots a scatter plot with confidence intervals used to plot ACF and PACF
     Parameters

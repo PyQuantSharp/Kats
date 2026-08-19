@@ -108,14 +108,11 @@ class TimeSeriesChangePoint:
 
     def __init__(
         self,
-        # pyre-fixme[11]: Annotation `Timestamp` is not defined as a type.
         start_time: pd.Timestamp,
         end_time: pd.Timestamp,
         confidence: float,
     ) -> None:
-        # pyre-fixme[4]: Attribute must be annotated.
         self._start_time = start_time
-        # pyre-fixme[4]: Attribute must be annotated.
         self._end_time = end_time
         self._confidence = confidence
 
@@ -298,7 +295,6 @@ class TimeSeriesData:
                     df = df.drop_duplicates(subset=[self.time_col_name], keep="first")
 
                 # Sort by time
-                # pyre-fixme[6]: For 2nd argument expected `DataFrame` but got
                 #  `Optional[DataFrame]`.
                 df = self._sort_by_time(sort_by_time=sort_by_time, df=df)
                 self._extract_from_df(df=df)
@@ -330,7 +326,6 @@ class TimeSeriesData:
             self._set_univariate_values_to_series()
             # Set time col name
             if time.name:
-                # pyre-fixme[8]: Attribute has type `str`; used as `Hashable`.
                 self.time_col_name = time.name
             else:
                 self._time.rename(DEFAULT_TIME_NAME, inplace=True)
@@ -376,7 +371,6 @@ class TimeSeriesData:
                 # drop duplicate time stamps
                 df = df.drop_duplicates(subset=[self.time_col_name], keep="first")
 
-            # pyre-fixme[6]: For 2nd argument expected `DataFrame` but got
             #  `Optional[DataFrame]`.
             df = self._sort_by_time(sort_by_time=sort_by_time, df=df)
             self._extract_from_df(df=df)
@@ -794,7 +788,6 @@ class TimeSeriesData:
         else:
             return False
 
-    # pyre-fixme[11]: Annotation `Timedelta` is not defined as a type.
     def freq_to_timedelta(self) -> pd.Timedelta:
         """
         Returns a `pandas.Timedelta` representation of the
@@ -859,7 +852,6 @@ class TimeSeriesData:
             ).reset_index(drop=True)
         else:
             raise ValueError(f"Wrong value type: {type(self.value)}")
-        # pyre-fixme[7]: Expected `DataFrame` but got `Optional[DataFrame]`.
         return output_df
 
     def to_array(self) -> npt.NDArray:
@@ -1094,18 +1086,14 @@ class TimeSeriesData:
         **kwargs: Any,
     ) -> TimeSeriesData:
         if method == "linear":
-            # pyre-ignore
             df = df.resample(rule=freq, origin=origin).interpolate(method="linear")
 
         elif method == "ffill":
-            # pyre-ignore
             df = df.resample(rule=freq, origin=origin).ffill()
 
         elif method == "bfill":
-            # pyre-ignore
             df = df.resample(rule=freq, origin=origin).bfill()
         else:
-            # pyre-ignore
             df = df.resample(rule=freq, origin=origin).interpolate(
                 # pyrefly: ignore [bad-argument-type]
                 method=cast(INTERPOLATION_METHOD_TYPE, method),
@@ -1181,7 +1169,6 @@ class TimeSeriesData:
     def convert_timezone(self, tz: str) -> None:
         if self.is_timezone_aware():
             self.time = (
-                # pyre-fixme[16]: `DatetimeIndex` has no attribute `tz_convert`.
                 pd.DatetimeIndex(self.time)
                 .tz_convert(tz)
                 .to_series()
@@ -1201,7 +1188,6 @@ class TimeSeriesData:
     ) -> None:
         if not (self.is_timezone_aware()):
             self.time = (
-                # pyre-ignore
                 pd.DatetimeIndex(self.time)
                 .tz_localize(tz, ambiguous=tz_ambiguous, nonexistent=tz_nonexistent)
                 .to_series()

@@ -109,7 +109,6 @@ class testHarmonicRegression(TestCase):
         )
 
         harms = HarmonicRegressionModel.fourier_series(
-            # pyre-fixme[6]: Expected `pd.core.series.Series` for 1st positional only parameter to call `HarmonicRegressionModel.fourier_series`
             TEST_DATA["default"]["ts"],
             24,
             3,
@@ -118,13 +117,11 @@ class testHarmonicRegression(TestCase):
         data = TimeSeriesData(
             pd.DataFrame({"time": TEST_DATA["default"]["ts"], "values": harms_sum})
         )
-        # pyre-fixme[6]: Expected `HarmonicRegressionParams` for 2nd positional only parameter to call `HarmonicRegressionModel.__init__`
         hrm = HarmonicRegressionModel(data, TEST_DATA["default"]["params"])
 
         self.assertRaises(
             ValueError,
             hrm.predict,
-            # pyre-fixme[16]: Undefined attribute [16]: `TimeSeriesData` has no attribute `head`
             TEST_DATA["default"]["ts"].head(1),
         )
         self.assertRaises(ValueError, hrm.plot)

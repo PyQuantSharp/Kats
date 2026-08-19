@@ -43,7 +43,6 @@ class testBayesianVARModel(TestCase):
         m = BayesianVAR(ts, self.params)
         self.assertEqual(list(m.data.to_dataframe().columns), correct_columns)
 
-    # pyre-fixme[56]: Pyre was not able to infer the type of the decorator
     #  `pytest.mark.mpl_image_compare($parameter$remove_text = True)`.
     @pytest.mark.mpl_image_compare(remove_text=True)
     def test_plot(self) -> plt.Figure:
@@ -56,7 +55,6 @@ class testBayesianVARModel(TestCase):
             self.assertIsNotNone(ax)
         return plt.gcf()
 
-    # pyre-fixme[56]: Pyre was not able to infer the type of the decorator
     #  `pytest.mark.mpl_image_compare($parameter$remove_text = True)`.
     @pytest.mark.mpl_image_compare(remove_text=True)
     def test_plot_ax(self) -> plt.Figure:
@@ -70,7 +68,6 @@ class testBayesianVARModel(TestCase):
             self.assertIsNotNone(ax)
         return plt.gcf()
 
-    # pyre-fixme[56]: Pyre was not able to infer the type of the decorator
     #  `pytest.mark.mpl_image_compare($parameter$remove_text = True)`.
     @pytest.mark.mpl_image_compare(remove_text=True)
     def test_plot_params(self) -> plt.Figure:

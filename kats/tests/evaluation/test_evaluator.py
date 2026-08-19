@@ -17,7 +17,6 @@ from kats.evaluation.evaluator import EvaluationObject, Evaluator
 from kats.metrics.metrics import core_metric
 from kats.tests.test_backtester_dummy_data import PROPHET_0_108_FCST_DUMMY_DATA
 
-# pyrefly: ignore [bad-argument-type]
 np.random.seed(42)
 
 # Constant Values
@@ -34,7 +33,6 @@ FCST_EVALUATION_ERRORS = pd.DataFrame(
 
 class EvaluatorTest(unittest.TestCase):
     @classmethod
-    # pyre-fixme[56]: Pyre was not able to infer the type of argument `set()` to
     #  decorator factory `unittest.mock.patch.multiple`.
     @mock.patch.multiple(Evaluator, __abstractmethods__=set())
     def setUpClass(cls) -> None:

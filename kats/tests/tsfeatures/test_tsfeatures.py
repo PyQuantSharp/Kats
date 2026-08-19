@@ -534,7 +534,6 @@ class TSfeaturesTest(TestCase):
             )
         # pyre-fixme[61]: `df` is undefined, or not always defined.
         df["value"] = df["value"].astype(dtype=pd.Int64Dtype())
-        # pyre-fixme[61]: `df` may not be initialized here.
         ts = TimeSeriesData(df)
 
         ts_features = TsFeatures(
@@ -752,7 +751,6 @@ class TestTsCalendarFeatures(TestCase):
         f1 = tcf.get_features(ts.time)
         f2 = tcf.get_features(ts)
         self.assertTrue(
-            # pyre-fixme[16]: Item `ndarray` of `ndarray[Any, dtype[Any]] |
             #  DataFrame` has no attribute `equals`.
             f1.equals(f2),
             "Features computed from the same timestamps are not equal.",

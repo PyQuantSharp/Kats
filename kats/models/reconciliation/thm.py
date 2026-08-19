@@ -88,18 +88,13 @@ class TemporalHierarchicalModel:
         if len(levels) != len(set(levels)):
             raise _log_error("One level cannot receive multiple models.")
 
-        # pyre-fixme[4]: Attribute must be annotated.
         self.levels = sorted(levels, reverse=True)
 
         m = self._get_m(levels)
-        # pyre-fixme[4]: Attribute must be annotated.
         self.m = m
-        # pyre-fixme[4]: Attribute must be annotated.
         self.freq = {k: int(m / k) for k in self.levels}
         self.baseModels = baseModels
-        # pyre-fixme[4]: Attribute must be annotated.
         self.info_fcsts = {}
-        # pyre-fixme[4]: Attribute must be annotated.
         self.info_residuals = {}
 
     def _get_m(self, ks: List[int]) -> int:
@@ -444,7 +439,6 @@ class TemporalHierarchicalModel:
         freq: Optional[str] = None,
         origin_fcst: bool = False,
         fcst_levels: Optional[List[int]] = None,
-        # pyre-fixme[11]: Annotation `Timestamp` is not defined as a type.
         last_timestamp: Optional[pd.Timestamp] = None,
     ) -> Dict[str, Dict[int, pd.DataFrame]]:
         """Generate reconciled forecasts (with time index).

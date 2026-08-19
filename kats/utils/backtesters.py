@@ -127,7 +127,6 @@ def _get_scorer(
                 _log_error(msg)
 
         # define scorer function
-        # pyre-fixme Incompatible return type [7]: Expected `Optional[typing.Callable[[DataFrame], Dict[str, float]]]` but got `Union[Metric, MultiOutputMetric, WeightedMetric]`.
         def calc_error(result: pd.DataFrame) -> Dict[str, float]:
             errors = {}
             for name, func in methods:
@@ -429,7 +428,6 @@ class BackTesterParent(ABC):
         self.multi = multi
         self.offset = offset
 
-        # pyre-fixme[4]: Attribute annotation cannot contain `Any`.
         self.results = []
         # Handling frequency
         if "freq" in kwargs:
@@ -438,7 +436,6 @@ class BackTesterParent(ABC):
             logging.info("Inferring frequency")
             self.freq = pd.infer_freq(self.data.time)
 
-        # pyre-fixme[4]: Attribute annotation cannot contain `Any`.
         self.raw_errors = []
 
         methods = []
@@ -1271,10 +1268,8 @@ class CrossValidation:
             logging.error("self.size: {0}".format(self.size))
             raise ValueError("Passing an empty time series")
 
-        # pyre-fixme[4]: Attribute annotation cannot contain `Any`.
         self.results = []
         self.errors = {}
-        # pyre-fixme[4]: Attribute annotation cannot contain `Any`.
         self.raw_errors = []
 
         if not constant_train_size:

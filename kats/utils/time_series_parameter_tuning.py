@@ -323,13 +323,11 @@ class TimeSeriesParameterTuning(ABC):
     ) -> None:
         if parameters is None:
             parameters = [{}]
-        # pyre-fixme[4]: Attribute must be annotated.
         self.logger = logging.getLogger(__name__)
         self.logger.info(
             "Parameter tuning search space dimensions: {}".format(parameters)
         )
         self.validate_parameters_format(parameters)
-        # pyre-fixme[4]: Attribute must be annotated.
         self.parameters = [
             InstantiationBase.parameter_from_json(parameter) for parameter in parameters
         ]
@@ -343,13 +341,10 @@ class TimeSeriesParameterTuning(ABC):
         )
         self._kats_search_space = SearchSpace(parameters=self.parameters)
         self.logger.info("Search space is created.")
-        # pyre-fixme[4]: Attribute must be annotated.
         self.job_id = uuid.uuid4().hex
-        # pyre-fixme[4]: Attribute must be annotated.
         self.experiment_name = (
             experiment_name if experiment_name else f"parameter_tuning_{self.job_id}"
         )
-        # pyre-fixme[4]: Attribute must be annotated.
         self.objective_name = (
             objective_name if objective_name else f"objective_{self.job_id}"
         )
@@ -588,7 +583,6 @@ class TimeSeriesParameterTuning(ABC):
         if self.outcome_constraints:
             # Deduplicate entries for which there are outcome constraints
             armscore_df = armscore_df.loc[
-                # pyre-ignore[16]: `None` has no attribute `index`.
                 armscore_df.astype(str).drop_duplicates().index
             ]
             if legit_arms_only:
@@ -794,7 +788,6 @@ class GridSearch(TimeSeriesParameterTuning):
             outcome_constraints,
             multiprocessing,
         )
-        # pyre-fixme[4]: Attribute must be annotated.
         self._factorial = Generators.FACTORIAL(
             experiment=self._exp, check_cardinality=False
         )
@@ -820,7 +813,6 @@ class GridSearch(TimeSeriesParameterTuning):
             arm_count = -1
         factorial_run = self._factorial.gen(n=arm_count)
         self.generator_run_for_search_method(
-            # pyrefly: ignore [bad-argument-type]
             evaluation_function=evaluation_function,
             # pyrefly: ignore [bad-argument-type]
             generator_run=factorial_run,
@@ -878,7 +870,6 @@ class RandomSearch(TimeSeriesParameterTuning):
             )
         self.logger.info("Seed that is used in random search: {seed}".format(seed=seed))
         if random_strategy == SearchMethodEnum.RANDOM_SEARCH_UNIFORM:
-            # pyre-fixme[4]: Attribute must be annotated.
             self._random_strategy_model = Generators.UNIFORM(
                 experiment=self._exp, deduplicate=True, seed=seed
             )
@@ -915,7 +906,6 @@ class RandomSearch(TimeSeriesParameterTuning):
         """
         model_run = self._random_strategy_model.gen(n=arm_count)
         self.generator_run_for_search_method(
-            # pyrefly: ignore [bad-argument-type]
             evaluation_function=evaluation_function,
             # pyrefly: ignore [bad-argument-type]
             generator_run=model_run,
@@ -1002,7 +992,6 @@ class BayesianOptSearch(TimeSeriesParameterTuning):
             )
         self.logger.info("Seed that is used in random search: {seed}".format(seed=seed))
         if random_strategy == SearchMethodEnum.RANDOM_SEARCH_UNIFORM:
-            # pyre-fixme[4]: Attribute must be annotated.
             self._random_strategy_model = Generators.UNIFORM(
                 experiment=self._exp, deduplicate=True, seed=seed
             )
@@ -1031,7 +1020,6 @@ class BayesianOptSearch(TimeSeriesParameterTuning):
             model_run = GeneratorRun(bootstrap_arms_list)
 
         self.generator_run_for_search_method(
-            # pyrefly: ignore [bad-argument-type]
             evaluation_function=evaluation_function,
             # pyrefly: ignore [bad-argument-type]
             generator_run=model_run,
@@ -1412,7 +1400,6 @@ class SearchForMultipleSpaces:
         # search_agent_dict is a dict for str -> TimeSeriesParameterTuning object
         # Thus, we can access different search method objects created using their
         # keys.
-        # pyre-fixme[4]: Attribute must be annotated.
         self.search_agent_dict = {
             agent_name: SearchMethodFactory.create_search_method(
                 parameters=model_params,

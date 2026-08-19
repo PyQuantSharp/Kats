@@ -854,7 +854,6 @@ class TimeSeriesDataInitTest(TimeSeriesBaseTest):
     # Testing Data interpolate with base
     def test_interpolate_base(self) -> None:
         # create time series with missing data
-        # pyrefly: ignore [bad-argument-type]
         np.random.seed(0)
         x = np.random.normal(0.5, 3, 998)
         time_val0 = list(
@@ -1634,7 +1633,6 @@ class TimeSeriesDataOpsTest(TimeSeriesBaseTest):
             ),
         )
 
-    # pyre-fixme[56]: Pyre was not able to infer the type of the decorator
     #  `pytest.mark.mpl_image_compare`.
     @pytest.mark.mpl_image_compare
     def test_plot(self) -> plt.Figure:
@@ -1643,7 +1641,6 @@ class TimeSeriesDataOpsTest(TimeSeriesBaseTest):
         self.assertIsNotNone(ax)
         return plt.gcf()
 
-    # pyre-fixme[56]: Pyre was not able to infer the type of the decorator
     #  `pytest.mark.mpl_image_compare`.
     @pytest.mark.mpl_image_compare
     def test_plot_multivariate(self) -> plt.Figure:
@@ -1652,7 +1649,6 @@ class TimeSeriesDataOpsTest(TimeSeriesBaseTest):
         self.assertIsNotNone(ax)
         return plt.gcf()
 
-    # pyre-fixme[56]: Pyre was not able to infer the type of the decorator
     #  `pytest.mark.mpl_image_compare`.
     @pytest.mark.mpl_image_compare
     def test_plot_params(self) -> plt.Figure:
@@ -1663,7 +1659,6 @@ class TimeSeriesDataOpsTest(TimeSeriesBaseTest):
         self.assertIsNotNone(ax)
         return plt.gcf()
 
-    # pyre-fixme[56]: Pyre was not able to infer the type of the decorator
     #  `pytest.mark.mpl_image_compare`.
     @pytest.mark.mpl_image_compare
     def test_plot_grid_ax(self) -> plt.Figure:

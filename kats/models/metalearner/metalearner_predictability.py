@@ -89,13 +89,10 @@ class MetaLearnPredictability:
                 logging.error(msg)
                 raise ValueError(msg)
 
-            # pyre-fixme[4]: Attribute must be annotated.
             self.metadata = metadata
-            # pyre-fixme[4]: Attribute must be annotated.
             self.threshold = threshold
             self._reorganize_data()
             self._validate_data()
-            # pyre-fixme[4]: Attribute must be annotated.
             self.rescale = False
             # pyre-fixme[4]: Attribute must be annotated.
             self.clf = None
@@ -127,14 +124,10 @@ class MetaLearnPredictability:
             except Exception as e:
                 logging.exception(e)
         self.labels = (np.array(self.labels) > self.threshold).astype(int)
-        # pyrefly: ignore [bad-assignment]
         self.features = pd.DataFrame(self.features, copy=False)
-        # pyrefly: ignore [missing-attribute]
         self.features.fillna(0, inplace=True)
-        # pyrefly: ignore [missing-attribute]
         self.features_mean = np.average(self.features.values, axis=0)
 
-        # pyrefly: ignore [missing-attribute]
         self.features_std = np.std(self.features.values, axis=0)
 
         self.features_std[self.features_std == 0] = 1.0
@@ -168,9 +161,7 @@ class MetaLearnPredictability:
         self.rescale = True
         # pyrefly: ignore [missing-attribute]
         features = (self.features.values - self.features_mean) / self.features_std
-        # pyrefly: ignore [bad-assignment]
         self.features = pd.DataFrame(
-            # pyrefly: ignore [missing-attribute]
             features,
             # pyrefly: ignore [missing-attribute]
             columns=self.features.columns,

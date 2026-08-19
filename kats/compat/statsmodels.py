@@ -13,9 +13,7 @@ import pandas as pd
 from kats.compat import compat
 from statsmodels.tsa import holtwinters
 
-# pyre-fixme[24]: Generic type `np.ndarray` expects 2 type parameters.
 ArrayLike = Union[np.ndarray, Sequence[float]]
-# pyre-fixme[5]: Global expression must be annotated.
 Frequency = Union[int, str, pd.Timedelta]
 
 
@@ -65,7 +63,6 @@ class ExponentialSmoothing(holtwinters.ExponentialSmoothing):
         *,
         bounds: Optional[Dict[str, Tuple[float, float]]] = None,
         dates: Optional[Union[ArrayLike, pd.DatetimeIndex, pd.PeriodIndex]] = None,
-        # pyre-fixme[11]: Annotation `Frequency` is not defined as a type.
         freq: Optional[Frequency] = None,
         initialization_method: str = "estimated",
         initial_level: Optional[float] = None,

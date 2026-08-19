@@ -84,9 +84,7 @@ class NowcastingModel(m.Model):
             )
             logging.error(msg)
             raise ValueError(msg)
-        # pyre-fixme[4]: Attribute must be annotated.
         self.df = data.to_dataframe()
-        # pyre-fixme[4]: Attribute must be annotated.
         self.step = params.step
         self.model = model
         self.feature_names = feature_names

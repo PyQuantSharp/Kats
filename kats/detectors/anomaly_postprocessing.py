@@ -280,7 +280,6 @@ class AnomalyPostProcessHandler:
             for i in range(len(self.anomaly_interval_list)):
                 # pyre-ignore [16]
                 ia = self.anomaly_interval_list[i]
-                # pyre-ignore [16]
                 itv_scores = self.score_lists[i]
                 total_sec = (ia.end - ia.start).total_seconds()
                 total_secs_list.append(total_sec)
@@ -511,7 +510,6 @@ class AnomalyPostProcessHandler:
 
         first = True
         if self.anomaly_interval_list is not None:
-            # pyre-ignore[16]
             for ia in self.anomaly_interval_list:
                 if first:
                     ax.axvspan(

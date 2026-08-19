@@ -23,7 +23,6 @@ from numpy.random import RandomState
 
 class GridSearchTest(TestCase):
     def test_time_series_parameter_tuning_arima(self) -> None:
-        # pyrefly: ignore [bad-argument-type]
         random_state: RandomState = RandomState(seed=0)
 
         # pyre-fixme[2]: Parameter must be annotated.
@@ -47,7 +46,6 @@ class GridSearchTest(TestCase):
         self.assertEqual(len(parameter_values_with_scores.index), 50)
 
     def test_time_series_parameter_tuning_prophet(self) -> None:
-        # pyrefly: ignore [bad-argument-type]
         random_state: RandomState = RandomState(seed=0)
 
         # pyre-fixme[2]: Parameter must be annotated.
@@ -71,7 +69,6 @@ class GridSearchTest(TestCase):
         self.assertEqual(len(parameter_values_with_scores.index), 25600)
 
     def test_grid_search_arm_count(self) -> None:
-        # pyrefly: ignore [bad-argument-type]
         random_state: RandomState = RandomState(seed=0)
 
         # pyre-fixme[2]: Parameter must be annotated.
@@ -189,7 +186,6 @@ class GridSearchTest(TestCase):
         self.assertEqual(time_series_parameter_tuning.parameters[2].value, 4)
 
     def test_time_series_parameter_tuning_arima_uniform_random_search(self) -> None:
-        # pyrefly: ignore [bad-argument-type]
         random_state: RandomState = RandomState(seed=0)
 
         # pyre-fixme[2]: Parameter must be annotated.
@@ -220,7 +216,6 @@ class GridSearchTest(TestCase):
         self.assertEqual(len(parameter_values_with_scores.index), 12)
 
     def test_time_series_parameter_tuning_prophet_sobol_random_search(self) -> None:
-        # pyrefly: ignore [bad-argument-type]
         random_state: RandomState = RandomState(seed=0)
 
         # pyre-fixme[2]: Parameter must be annotated.
@@ -351,7 +346,6 @@ class GridSearchTest(TestCase):
     #     self.assertGreaterEqual(len(parameter_values_with_scores.index), 2)
 
     def test_time_series_parameter_tuning_prophet_bayes_opt_scheduler(self) -> None:
-        # pyrefly: ignore [bad-argument-type]
         random_state: RandomState = RandomState(seed=0)
 
         #     # pyre-fixme[2]: Parameter must be annotated.
@@ -427,7 +421,6 @@ class GridSearchTest(TestCase):
         self.assertGreaterEqual(len(parameter_values_with_scores.index), min_trials)
 
     def test_time_series_parameter_tuning_NeverGrad(self) -> None:
-        # pyrefly: ignore [bad-argument-type]
         random_state: RandomState = RandomState(seed=0)
 
         # pyre-fixme[2]: Parameter must be annotated.
@@ -506,7 +499,6 @@ class GridSearchTest(TestCase):
         self.assertGreaterEqual(len(parameter_values_with_scores.index), 1)
 
     def test_time_series_parameter_tuning_NeverGrad_fixed_necessary_param(self) -> None:
-        # pyrefly: ignore [bad-argument-type]
         random_state: RandomState = RandomState(seed=0)
         necessary_param_name: str = "nec_param"
 
@@ -556,7 +548,6 @@ class GridSearchTest(TestCase):
         self.assertGreaterEqual(len(parameter_values_with_scores.index), 1)
 
     def test_time_series_parameter_tuning_NeverGrad_multi(self) -> None:
-        # pyrefly: ignore [bad-argument-type]
         random_state: RandomState = RandomState(seed=0)
 
         #     # pyre-fixme[2]: Parameter must be annotated.
@@ -718,7 +709,6 @@ class TestSearchForMultipleSpaces(TestCase):
                     "is_ordered": True,
                 },
             ],
-            # pyrefly: ignore [bad-typed-dict-key]
             "space2": [
                 {
                     "name": "n_changepoints",
@@ -777,7 +767,6 @@ class TestSearchForMultipleSpaces(TestCase):
             experiment_name="experiment1",
             objective_name="objective1",
         )
-        # pyrefly: ignore [bad-argument-type]
         random_state: RandomState = RandomState(seed=0)
 
         # pyre-fixme[2]: Parameter must be annotated.

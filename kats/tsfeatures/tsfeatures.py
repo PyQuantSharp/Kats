@@ -33,8 +33,6 @@ from scipy import stats
 from scipy.linalg import toeplitz
 from scipy.signal import periodogram  # @manual
 from statsmodels.stats.diagnostic import het_arch
-
-# pyre-fixme[21]: Could not find name `STL` in `statsmodels.tsa.seasonal`.
 from statsmodels.tsa.seasonal import STL
 from statsmodels.tsa.stattools import acf, kpss, pacf
 
@@ -242,7 +240,6 @@ _FEATURE_GROUP_MAPPING: Dict[str, List[str]] = {
 }
 
 TSMethod = Callable[[TimeSeriesData], Dict[str, float]]
-# pyre-fixme[24]: Generic type `np.ndarray` expects 2 type parameters.
 ArrayMethod = Callable[[np.ndarray], Dict[str, float]]
 
 
@@ -762,7 +759,6 @@ class TsFeatures:
         stl_features = {}
 
         # STL decomposition
-        # pyre-fixme[16]: Module `seasonal` has no attribute `STL`.
         res = STL(x, period=period).fit()
 
         # strength of trend
@@ -1492,7 +1488,6 @@ class TsFeatures:
                     0 if cp is None else cp.cp_index / len(ts)
                 )
             if extra_args is not None and extra_args.get("cusum_delta", default_status):
-                # pyre-fixme[6]: For 2nd argument expected `float` but got
                 #  `Union[ndarray[Any, dtype[Any]], float]`.
                 cusum_detector_features["cusum_delta"] = 0 if cp is None else cp.delta
             if extra_args is not None and extra_args.get("cusum_llr", default_status):
@@ -1956,7 +1951,6 @@ class TsFeatures:
                 _period = int(np.min(detected["seasonalities"]))
             else:
                 _period = 7
-            # pyre-fixme[16]: Module `seasonal` has no attribute `STL`.
             res = STL(ts.value.values, period=_period).fit()
 
             if extra_args is not None and extra_args.get(

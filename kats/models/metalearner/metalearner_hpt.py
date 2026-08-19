@@ -208,7 +208,6 @@ class MetaLearnHPT:
             data_x.fillna(0, inplace=True)
             # pyre-fixme[4]: Attribute must be annotated.
             self.dataX = np.asarray(data_x)
-            # pyre-fixme[4]: Attribute must be annotated.
             self.dataY = data_y.copy()
             # pyre-fixme[4]: Attribute must be annotated.
             self.dim_input = self.dataX.shape[1]
@@ -216,12 +215,10 @@ class MetaLearnHPT:
             self.model = None
 
             # Record loss path for validation/trainin set and for both classification and regression.
-            # pyre-fixme[4]: Attribute must be annotated.
             self._loss_path = collections.defaultdict(list)
 
             if isinstance(default_model, str):
                 default_model = default_model.lower()
-            # pyre-fixme[4]: Attribute must be annotated.
             self.__default_model = default_model
 
             default_model_params = DefaultModelParams()
@@ -248,23 +245,18 @@ class MetaLearnHPT:
                 msg = "At least one of numerical_idx and categorical_idx should be a non-empty list."
                 raise _log_error(msg)
 
-            # pyre-fixme[4]: Attribute must be annotated.
             self.categorical_idx = categorical_idx
-            # pyre-fixme[4]: Attribute must be annotated.
             self.numerical_idx = numerical_idx
-            # pyre-fixme[4]: Attribute must be annotated.
             self._target_num = (
                 np.asarray(self.dataY[self.numerical_idx])
                 if self.numerical_idx
                 else None
             )
-            # pyre-fixme[4]: Attribute must be annotated.
             self._dim_output_num = (
                 self._target_num.shape[1] if self._target_num is not None else 0
             )
             self._get_target_cat()
             self._validate_data()
-            # pyre-fixme[4]: Attribute must be annotated.
             self.scale = scale
             if self.scale:
                 # pyre-fixme[4]: Attribute must be annotated.
@@ -320,7 +312,7 @@ class MetaLearnHPT:
             msg = f"Dimensions of data_y (dim={dim}) and the input variables (dim={n_cat}+{n_num}) do not agree!"
             raise _log_error(msg)
 
-        # pyrefly: ignore [bad-argument-type, not-iterable]
+        # pyrefly: ignore [not-iterable]
         for i, var in enumerate(self.categorical_idx):
             if self.dim_output_cat[i] == 1:
                 msg = f"Column {var} only has one class, not able to train a model!"
@@ -725,12 +717,12 @@ class MetaLearnHPT:
         nums = nums.detach().numpy() if nums is not None else []
 
         ans = [{} for _ in range(n)]
-        # pyrefly: ignore [bad-argument-type, not-iterable]
+        # pyrefly: ignore [not-iterable]
         for j, c in enumerate(self.categorical_idx):
             vals = cats[j]
             for i in range(n):
                 ans[i][c] = self.cat_code_dict[c][vals[i]]
-        # pyrefly: ignore [bad-argument-type, not-iterable]
+        # pyrefly: ignore [not-iterable]
         for j, c in enumerate(self.numerical_idx):
             # pyrefly: ignore [bad-index]
             vals = nums[:, j]
@@ -901,13 +893,10 @@ class MultitaskNet(nn.Module):
         else:
             y_pred_cat_combo = []
             for cat_layer in self.cat_layer_combo:
-                # pyre-fixme[29]: Call error: `Union[nn.modules.module.Module, torch._tensor.Tens...
                 y_pred_cat = cat_layer[0](x)
-                # pyre-fixme[6]: Incompatible parameter type: In call `len`, for 1st positional a...
                 for i in range(1, len(cat_layer)):
                     # the last layer has no activation function
                     y_pred_cat = nn.functional.relu(y_pred_cat)
-                    # pyre-fixme[29]: Call error: `Union[nn.modules.module.Module, torch._tensor....
                     y_pred_cat = cat_layer[i](y_pred_cat)
                 y_pred_cat_combo.append(y_pred_cat)
 

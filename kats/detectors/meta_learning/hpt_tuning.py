@@ -200,7 +200,6 @@ class MetaDetectHptSelect:
         hpt_algo = {k: v for k, v in hyper_parameters.items() if k not in hpt_to_remove}
 
         # Try initializing the detector model
-        # pyre-fixme[45]
         _ = detector_model(**hpt_algo)
 
     @staticmethod

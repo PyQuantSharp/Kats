@@ -66,7 +66,6 @@ class GMEnsemble:
             raise ValueError(msg)
         self.params = gmparam
         if ensemble_type == "median":
-            # pyre-fixme[4]: Attribute must be annotated.
             self._ensemble_func = np.median
         elif ensemble_type == "mean":
             self._ensemble_func = np.mean
@@ -97,7 +96,6 @@ class GMEnsemble:
 
         total_cores = cpu_count()
         if max_core is None:
-            # pyre-fixme[4]: Attribute must be annotated.
             self.max_core = max((total_cores - 1) // 2, 1)
         elif isinstance(max_core, int) and max_core > 0 and max_core <= total_cores:
             self.max_core = max_core
@@ -105,11 +103,8 @@ class GMEnsemble:
             msg = f"max_core should be a positive integer in [1, {total_cores}] but receives {max_core}."
             logging.error(msg)
             raise ValueError(msg)
-        # pyre-fixme[4]: Attribute must be annotated.
         self.gm_info = []
-        # pyre-fixme[4]: Attribute must be annotated.
         self.gm_models = [GMModel(self.params) for _ in range(self.model_num)]
-        # pyre-fixme[4]: Attribute must be annotated.
         self.test_ids = []
 
     def _fit_single_gm(
@@ -141,7 +136,6 @@ class GMEnsemble:
         """
 
         if random_seed is not None:
-            # pyrefly: ignore [bad-argument-type]
             np.random.seed(random_seed)
             torch.manual_seed(random_seed)
             # to ensure performance
@@ -252,7 +246,6 @@ class GMEnsemble:
             )
         return
 
-    # pyre-fixme[3]: Return annotation cannot contain `Any`.
     def _combine_fcst(
         self,
         # pyre-fixme[2]: Parameter annotation cannot be `Any`.
@@ -260,7 +253,6 @@ class GMEnsemble:
         fcsts: List[npt.NDArray],
         steps: int,
         raw: bool,
-        # pyre-fixme[11]: Annotation `Timestamp` is not defined as a type.
         first_timestamp: Optional[pd.Timestamp] = None,
         col_names: Optional[List[str]] = None,
     ) -> Tuple[Any, Any]:
@@ -288,7 +280,6 @@ class GMEnsemble:
             )
             return idx, df
 
-    # pyre-fixme[3]: Return annotation cannot contain `Any`.
     def predict(
         self,
         # pyre-fixme[2]: Parameter annotation cannot contain `Any`.

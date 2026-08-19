@@ -243,7 +243,6 @@ class ProphetModel(Model[ProphetParams]):
         freq: a string or a `pd.Timedelta` object representing the frequency of time series. If `ProphetModel` object is not fitted, then `freq` is None.
     """
 
-    # pyre-fixme[11]: Annotation `Timedelta` is not defined as a type.
     freq: Union[None, str, pd.Timedelta] = None
     model: Optional[Prophet] = None
 
@@ -823,7 +822,6 @@ def sample_posterior_predictive(
     # pyrefly: ignore [missing-attribute]
     n_iterations = prophet_model.params["k"].shape[0]
     samp_per_iter = max(
-        # pyrefly: ignore [missing-attribute]
         1,
         # pyrefly: ignore [missing-attribute]
         int(np.ceil(prophet_model.uncertainty_samples / float(n_iterations))),
@@ -864,13 +862,11 @@ def sample_posterior_predictive(
             ]
             for key in sim_values:
                 for sim in sims:
-                    # pyre-fixme[16]: `ndarray` has no attribute `values`.
                     sim_values[key].append(sim[key].values)
     for k, v in sim_values.items():
         # pyre-fixme[6]: For 2nd argument expected `List[Any]` but got `ndarray[Any,
         #  dtype[Any]]`.
         sim_values[k] = np.vstack(v)
-    # pyre-fixme[24]: Generic type `np.ndarray` expects 2 type parameters.
     return cast(Dict[str, np.ndarray], sim_values)
 
 
@@ -925,7 +921,6 @@ def _logistic_uncertainty(
 
     # for logistic growth we need to evaluate the trend all the way from the start of the train item
     historical_mat, historical_time = _make_historical_mat_time(
-        # pyrefly: ignore [missing-attribute]
         deltas,
         # pyrefly: ignore [missing-attribute]
         prophet_model.changepoints_t,
@@ -992,7 +987,6 @@ def sample_linear_predictive_trend_vectorize(
     deltas = prophet_model.params["delta"][iteration]
     # pyrefly: ignore [missing-attribute]
     changepoints_t = prophet_model.changepoints_t
-    # pyre-fixme[6]: For 1st argument expected `Sequence[Union[_SupportsArray[dtype[A...
     changepoint_ts = np.vstack([changepoints_t] * sample_size)
 
     deltas = np.vstack([deltas] * sample_size)
@@ -1013,7 +1007,6 @@ def sample_linear_predictive_trend_vectorize(
     if max_possion_num > 0:
         # sample change points
         changepoint_ts_new = 1 + np.random.rand(sample_size, max_possion_num) * (T - 1)
-        # pyre-fixme[16]: `int` has no attribute `sort`.
         changepoint_ts_new.sort(axis=1)
 
         # create mask for deltas -> to mute some deltas based on number of change points

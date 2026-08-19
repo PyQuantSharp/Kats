@@ -29,7 +29,6 @@ from kats.models.ensemble.median_ensemble import MedianEnsembleModel
 from kats.models.ensemble.weighted_avg_ensemble import WeightedAvgEnsemble
 from parameterized.parameterized import parameterized
 
-# pyrefly: ignore [bad-argument-type]
 np.random.seed(123321)
 DATA_dummy = pd.DataFrame(
     {

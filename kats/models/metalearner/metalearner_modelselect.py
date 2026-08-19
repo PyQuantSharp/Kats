@@ -90,12 +90,10 @@ class MetaLearnModelSelect:
                 logging.error(msg)
                 raise ValueError(msg)
 
-            # pyre-fixme[4]: Attribute must be annotated.
             self.metadata = metadata
             self._reorganize_data()
             self._validate_data()
 
-            # pyre-fixme[4]: Attribute must be annotated.
             self.scale = False
             # pyre-fixme[4]: Attribute must be annotated.
             self.clf = None
@@ -546,7 +544,6 @@ class RandomDownSampler:
         self.hpt = hpt
         self.dataX = dataX
         self.dataY = dataY
-        # pyre-fixme[4]: Attribute must be annotated.
         self.col_namesX = self.dataX.columns
 
     def fit_resample(self) -> Tuple[pd.Series, pd.DataFrame, pd.Series]:

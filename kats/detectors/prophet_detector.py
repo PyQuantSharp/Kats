@@ -36,8 +36,6 @@ from prophet import Prophet
 from prophet.make_holidays import make_holidays_df
 from prophet.serialize import model_from_json, model_to_json
 from pyre_extensions import ParameterSpecification
-
-# pyrefly: ignore [missing-module-attribute]
 from scipy.stats import norm
 
 P = ParameterSpecification("P")
@@ -80,7 +78,7 @@ class SilentStdoutStderr(object):
         os.dup2(self.orig_stdout, self.stdout)  # pyre-fixme
         os.dup2(self.orig_stderr, self.stderr)  # pyre-fixme
         # close all file descriptors
-        for file in [self.devnull, self.orig_stdout, self.orig_stderr]:  # pyre-fixme
+        for file in [self.devnull, self.orig_stdout, self.orig_stderr]:
             os.close(file)
 
 
@@ -568,7 +566,6 @@ class ProphetDetectorModel(DetectorModel):
             self.holidays = pd.DataFrame(self.holidays_list)
 
         model = Prophet(
-            # pyre-fixme[16]: Item `str` of `GrowthType | str` has no attribute `value`.
             growth=self.growth_type.value,
             interval_width=self.scoring_confidence_interval,
             uncertainty_samples=self.uncertainty_samples,

@@ -50,7 +50,6 @@ class TestStatSigDetector(TestCase):
         self.ss_detect = StatSigDetectorModel(n_control=20, n_test=7)
 
     def test_detector(self) -> None:
-        # pyrefly: ignore [bad-argument-type]
         np.random.seed(100)
         pred_later = self.ss_detect.fit_predict(
             historical_data=self.ts_init, data=self.ts_later
@@ -61,7 +60,6 @@ class TestStatSigDetector(TestCase):
         self.assertEqual(len(pred_later.scores), len(self.ts_later))
 
     def test_logging(self) -> None:
-        # pyrefly: ignore [bad-argument-type]
         np.random.seed(100)
 
         date_start_str = "2020-03-01"
@@ -468,7 +466,6 @@ class TestStatSigDetectorHistorical(TestCase):
 
 class TestMultiStatSigDetector(TestCase):
     def setUp(self) -> None:
-        # pyrefly: ignore [bad-argument-type]
         np.random.seed(100)
         date_start = datetime.strptime("2020-03-01", "%Y-%m-%d")
         num_seq = 3
@@ -544,7 +541,6 @@ class TestMultiStatSigDetector(TestCase):
         self._check_tsdata_nonnull(pred_later.scores)
 
     def test_logging(self) -> None:
-        # pyrefly: ignore [bad-argument-type]
         np.random.seed(100)
 
         date_start_str = "2020-03-01"
@@ -908,7 +904,6 @@ class TestStatSigDetectorTimeUnit(TestCase):
 class TestStatSigDetectorAnomalyScoresOnly(TestCase):
     def test_anomaly_scores_only(self) -> None:
         # no missing data, no historical data
-        # pyrefly: ignore [bad-argument-type]
         np.random.seed(0)
         x = np.random.normal(0.5, 3, 100)
         time = pd.date_range(start="2018-01-01", freq="h", periods=100)
@@ -1104,7 +1099,6 @@ class TestStatSigDetectorAnomalyScoresOnly(TestCase):
 
 class TestInterpolateBase(TestCase):
     def setUp(self) -> None:
-        # pyrefly: ignore [bad-argument-type]
         np.random.seed(0)
         x = np.random.normal(0.5, 3, 199)
         time_val0 = list(
@@ -1182,7 +1176,6 @@ class TestInterpolateBase(TestCase):
 
 class TestStatsigDetectorModelIrregularGranularityError(TestCase):
     def setUp(self) -> None:
-        # pyrefly: ignore [bad-argument-type]
         np.random.seed(100)
         ts_time = list(
             pd.date_range(start="2018-01-06 00:00:00", freq="60s", periods=(100))
@@ -1209,7 +1202,6 @@ class TestStatsigDetectorModelIrregularGranularityError(TestCase):
 
 class TestStatsigDetectorSparseData(TestCase):
     def test_sparse_test_range(self) -> None:
-        # pyrefly: ignore [bad-argument-type]
         np.random.seed(100)
         ts_time = list(pd.date_range(start="2018-01-06 00:00:00", freq="s", periods=30))
         # There is a gap of 20 seconds, which is > `n_control + n_test`.
@@ -1230,7 +1222,6 @@ class TestStatsigDetectorSparseData(TestCase):
             self.assertTrue(np.isnan(test_value))
 
     def test_sparse_then_dense_test_range(self) -> None:
-        # pyrefly: ignore [bad-argument-type]
         np.random.seed(100)
         ts_time = list(pd.date_range(start="2018-01-06 00:00:00", freq="s", periods=30))
         # There is a gap of 20 seconds, which is > `n_control + n_test`.

@@ -29,7 +29,6 @@ from scipy.special import expit  # @manual
 
 
 def gen_no_trend_data_ndim(time: pd.Series, ndim: int = 1) -> TimeSeriesData:
-    # pyrefly: ignore [bad-argument-type]
     np.random.seed(20)
     n_days = len(time)
     data = np.ones((n_days, ndim)) * np.random.randint(1000, size=(1, ndim))
@@ -45,7 +44,6 @@ def gen_trend_data_ndim(
     change_smoothness: float = 5.0,
     ndim: int = 1,
 ) -> Tuple[TimeSeriesData, List[float]]:
-    # pyrefly: ignore [bad-argument-type]
     np.random.seed(20)
 
     n_days = len(time)
